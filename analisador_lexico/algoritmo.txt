@@ -1,0 +1,22 @@
+Tokens
+    Identificadores
+        estes são as variáveis do programa
+            variáveis válidas
+                char (sem diferença de tipo de letra)
+                char and int
+                char (palavra reservada) and int
+                <letra> { <letra>|<digito> }
+                teste, teste123, if12, begin1, ...
+            variáveis inválidas
+                if, begin, teste == TESTE, 123
+    Palavras Reservadas
+        são palavras que possuem uma função
+            program, label, type, array, of, var, procedure, function, begin, end, if, then, else, while, do, or, and, div, not
+    Símbolos especial 
+        ., ,, ;, (, ), :=, =, <, >, +, -, *, [, ]
+    Símbolos especiais compostos
+        :=, .., (*, *)
+    Separadores
+        barra de espaço, \n, tab
+    Numeros
+        1 ... 9

@@ -1,0 +1,79 @@
+int main(void)
+    // criacao dos tipos diferentes de identificadores 
+    char *letras = [a ... z, A ... Z];
+    char *separadores = [ ,\n, \t];
+    char *simbolos_especiais = [., ,, ;, (, ), :=, =, <, >, +, -, *, [, ]];
+    char *numeros = [1 ... 9];
+    char **palavras_reservadas = [program, label, type, array, of, var, procedure, function, begin, end, if, then, else, while, do, or, and, div, not]
+    
+    // criacao da quantidade dos identificadores 
+    int qtd_identificador = 0, qtd_palavras_reservadas = 0, qtd_simbolo_especial = 0, qtd_simbolo_especial_composto = 0, qtd_separador = 0, qtd_erro = 0, qtd_token = 0, qtd_numero = 0;
+    bool erro, tem_numero = false, tem_letra = false;
+    
+    // palavra atual e token
+    void *palavra_atual;
+    char *token;
+    
+    // final da posicao do loop
+    int posicao;
+
+    // loop principal
+    while scanf("%s", &palavra_atual) != EOF
+        // iniciando o token
+        token = &palavra_atual;
+
+        // busca pelo separador
+        while scanf("%s", &palavra_atual) != separador
+        
+            // comeca com LETRA
+            if palavra_atual == letras
+                // leitura da plavra toda
+                while palavra_atual == (letras | numeros)
+                    if palavra_atual == numeros
+                        tem_numero = true;
+                    palavra_atual++;
+
+                // colentando ultima posicao
+                posicao = token - palavra_atual
+                
+                // verifica se palavra reservada
+                if tem_numero == true
+                    qtd_identificador++;
+                    qtd_token++;
+                else
+                    if verifica_palavra_reservada()
+                        qtd_palavras_reservadas++;
+                        qtd_token++;
+                    qtd_identificador++;
+                    qtd_token++;
+                    continue;
+
+            // comeca com NUMERO
+            elif palavra_atual == numeros
+                // leitura da plavra toda
+                while palavra_atual == (letras | numeros)
+                    if palavra_atual == letra
+                        tem_letra = true;
+                    palavra_atual++;
+                
+                // colentando ultima posicao
+                posicao = token - palavra_atual
+
+                // verifica se tem letra
+                if tem_letra == true
+                    qtd_erro++;
+                else
+                    qtd_numero++;     
+                    qtd_token++;               
+        
+            // comeca com SIMBOLO ESPECIAL
+            elif palavra_atual == simbolos_especiais
+                // ainda nao fiz
+            
+            // SEPARADOR
+            else
+                qtd_separador++;
+    
+    palavra_atual++;
+
+return 0;
