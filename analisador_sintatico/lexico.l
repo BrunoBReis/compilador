@@ -34,7 +34,7 @@
 ";"             { return Token_SEMICOLON; }
 ","             { return Token_COMMA; }
 "."             { return Token_DOT; }
-[a-zA-Z_][a-zA-Z0-9_]* { yylval.sval = strdup(yytext); return Token_ID; }
+[a-zA-Z][a-zA-Z0-9]* { yylval.sval = strdup(yytext); return Token_ID; }
 [0-9]+          { yylval.ival = atoi(yytext); return Token_NUMBER; }
 [ \t\n]         { }
 \(\*([^*]|\*+[^)])*\*+\) { }
