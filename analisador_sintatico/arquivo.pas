@@ -1,2 +1,4 @@
-program olamundo(input  ,output);
-   label 12, 123 12312, 3123, 13;.
+program olamundo(input,output);
+begin
+   write(42)
+end.
