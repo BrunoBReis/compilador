@@ -14,111 +14,28 @@ void yyerror(const char *s);
     char *sval;
 }
 
-%token Token_PROGRAM Token_BEGIN Token_END Token_WRITE Token_READ Token_VAR Token_INTEGER Token_PROCEDURE Token_IF Token_THEN Token_ELSE Token_WHILE Token_DO
-%token Token_COLON Token_SEMICOLON Token_COMMA Token_DOT Token_LPAREN Token_RPAREN Token_ASSIGN Token_DIV Token_PLUS Token_MINUS Token_MULT Token_DIVIDE
-%token Token_LT Token_LE Token_GT Token_GE Token_NE Token_EQ
-%token Token_ID Token_NUMBER
+%token Token_AND Token_ARRAY Token_BEGIN Token_DIV Token_DO Token_ELSE Token_END Token_FUNCTION Token_GOTO Token_IF Token_LABEL Token_NOT Token_OF Token_OR Token_PROCEDURE Token_PROGRAM Token_THEN Token_TYPE Token_VAR Token_WHILE Token_READ Token_WRITE Token_ID Token_NUMBER
+%token Token_ASSIGN Token_LE Token_GE Token_NE Token_PLUS Token_MINUS Token_MULT Token_DIVIDE Token_LT Token_GT Token_EQ Token_LPAREN Token_RPAREN Token_LBRACKET Token_RBRACKET Token_SEMICOLON Token_COLON Token_COMMA Token_PERIOD
+
+
 
 %type <ival> expression
-
+/*Token_PROGRAM Token_ID Token_LPAREN8*/
 %%
-program: Token_PROGRAM Token_ID Token_LPAREN identifier_list Token_RPAREN Token_SEMICOLON block Token_DOT
-       {
-           printf("Aceito\n");
-       }
+programa: Token_PROGRAM Token_ID Token_LPAREN LISTA_ID Token_RPAREN Token_SEMICOLON BLOCO Token_PERIOD {printf("Aceito\n");}
+
+BLOCO: DECLARACAO_ROTULOS
+     | 
+
+DECLARACAO_ROTULOS: Token_LABEL LISTA_NUMEROS Token_SEMICOLON
+
+LISTA_NUMEROS: LISTA_NUMEROS Token_COMMA Token_NUMBER
+           | Token_NUMBER
+           ;
+
+LISTA_ID: LISTA_ID Token_COMMA Token_ID
+       | Token_ID
        ;
-
-identifier_list: Token_ID
-               | identifier_list Token_COMMA Token_ID
-               ;
-
-block: var_declaration_part procedure_declaration_part statement_part
-     ;
-
-var_declaration_part: Token_VAR var_declaration_list Token_SEMICOLON
-                    | /* empty */
-                    ;
-
-var_declaration_list: var_declaration
-                    | var_declaration_list Token_SEMICOLON var_declaration
-                    ;
-
-var_declaration: identifier_list Token_COLON type
-               ;
-
-type: Token_INTEGER
-    ;
-
-procedure_declaration_part: procedure_declaration_list
-                          | /* empty */
-                          ;
-
-procedure_declaration_list: procedure_declaration
-                          | procedure_declaration_list procedure_declaration
-                          ;
-
-procedure_declaration: Token_PROCEDURE Token_ID Token_SEMICOLON block Token_SEMICOLON
-                     ;
-
-statement_part: Token_BEGIN statement_sequence Token_END
-              ;
-
-statement_sequence: statement
-                  | statement_sequence Token_SEMICOLON statement
-                  ;
-
-statement: assignment_statement
-         | procedure_statement
-         | compound_statement
-         | if_statement
-         | while_statement
-         | read_statement
-         | write_statement
-         ;
-
-assignment_statement: Token_ID Token_ASSIGN expression
-                    ;
-
-procedure_statement: Token_ID
-                   ;
-
-compound_statement: Token_BEGIN statement_sequence Token_END
-                  ;
-
-if_statement: Token_IF expression Token_THEN statement
-            | Token_IF expression Token_THEN statement Token_ELSE statement
-            ;
-
-while_statement: Token_WHILE expression Token_DO statement
-               ;
-
-read_statement: Token_READ Token_LPAREN Token_ID Token_RPAREN
-              ;
-
-write_statement: Token_WRITE Token_LPAREN expression Token_RPAREN
-               ;
-
-expression: expression Token_PLUS term
-          | expression Token_MINUS term
-          | expression Token_LT term
-          | expression Token_LE term
-          | expression Token_GT term
-          | expression Token_GE term
-          | expression Token_NE term
-          | expression Token_EQ term
-          | term
-          ;
-
-term: term Token_MULT factor
-    | term Token_DIVIDE factor
-    | term Token_DIV factor
-    | factor
-    ;
-
-factor: Token_ID
-      | Token_NUMBER
-      | Token_LPAREN expression Token_RPAREN
-      ;
 %%
 void yyerror(const char *s) {
     fprintf(stderr, "Rejeito\n");
