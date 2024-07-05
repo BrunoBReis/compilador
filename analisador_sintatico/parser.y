@@ -60,7 +60,8 @@ OU_ID: OU_ID Token_COMMA Token_ID
      ;
 
 COMANDO_COMPOSTO: Token_BEGIN OU_COMANDO Token_END
-        ;
+                | Token_BEGIN OU_COMANDO Token_END Token_SEMICOLON BLOCO
+                ;
 
 OU_COMANDO: OU_COMANDO Token_SEMICOLON COMANDO
           | COMANDO

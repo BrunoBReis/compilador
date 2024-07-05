@@ -1,10 +1,4 @@
-program exemplo73 (input, output);
-var n, s, i : integer;
-   procedure soma;
-   var q : integer;
-   begin
-      write(12)
-   end
+program olamundo(input,output);
 begin
-   write(12)
+   write(42)
 end.
