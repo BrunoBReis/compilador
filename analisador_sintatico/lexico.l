@@ -45,7 +45,7 @@
 ","             { return Token_COMMA; }
 "."             { return Token_PERIOD; }    
 [a-zA-Z][a-zA-Z0-9]* { yylval.sval = strdup(yytext); return Token_ID; }
-[0-9]+          { yylval.ival = atoi(yytext); return Token_NUMBER; }
+[[0-9]+(\.[0-9]+)?   { yylval.ival = atoi(yytext); return Token_NUMBER; }
 [ \t\n]         { }
 \(\*([^*]|\*+[^)])*\*+\) { }
 .               { fprintf(stderr, "Caractere inválido: %s\n", yytext); }
