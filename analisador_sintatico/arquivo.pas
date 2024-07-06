@@ -1,4 +1,2 @@
-program olamundo(input,output);
-begin
-  write(42)
-end.
+program exemplo5 (input, output);
+var n, k : integer; f1 : integer;.
