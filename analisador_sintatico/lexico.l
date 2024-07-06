@@ -25,6 +25,7 @@
 "while"         { return Token_WHILE; }
 "read"          { return Token_READ; }
 "write"         { return Token_WRITE; }
+"writeln"       { return Token_WRITELN; }
 ":="            { return Token_ASSIGN; }
 "<="            { return Token_LE; }
 ">="            { return Token_GE; }

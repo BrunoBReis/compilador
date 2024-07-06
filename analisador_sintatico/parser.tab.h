@@ -76,27 +76,28 @@ extern int yydebug;
     Token_WHILE = 277,             /* Token_WHILE  */
     Token_READ = 278,              /* Token_READ  */
     Token_WRITE = 279,             /* Token_WRITE  */
-    Token_ASSIGN = 280,            /* Token_ASSIGN  */
-    Token_LE = 281,                /* Token_LE  */
-    Token_GE = 282,                /* Token_GE  */
-    Token_NE = 283,                /* Token_NE  */
-    Token_PLUS = 284,              /* Token_PLUS  */
-    Token_MINUS = 285,             /* Token_MINUS  */
-    Token_MULT = 286,              /* Token_MULT  */
-    Token_DIVIDE = 287,            /* Token_DIVIDE  */
-    Token_LT = 288,                /* Token_LT  */
-    Token_GT = 289,                /* Token_GT  */
-    Token_EQ = 290,                /* Token_EQ  */
-    Token_LPAREN = 291,            /* Token_LPAREN  */
-    Token_RPAREN = 292,            /* Token_RPAREN  */
-    Token_LBRACKET = 293,          /* Token_LBRACKET  */
-    Token_RBRACKET = 294,          /* Token_RBRACKET  */
-    Token_SEMICOLON = 295,         /* Token_SEMICOLON  */
-    Token_COLON = 296,             /* Token_COLON  */
-    Token_COMMA = 297,             /* Token_COMMA  */
-    Token_PERIOD = 298,            /* Token_PERIOD  */
-    Token_ID = 299,                /* Token_ID  */
-    Token_NUMBER = 300             /* Token_NUMBER  */
+    Token_WRITELN = 280,           /* Token_WRITELN  */
+    Token_ASSIGN = 281,            /* Token_ASSIGN  */
+    Token_LE = 282,                /* Token_LE  */
+    Token_GE = 283,                /* Token_GE  */
+    Token_NE = 284,                /* Token_NE  */
+    Token_PLUS = 285,              /* Token_PLUS  */
+    Token_MINUS = 286,             /* Token_MINUS  */
+    Token_MULT = 287,              /* Token_MULT  */
+    Token_DIVIDE = 288,            /* Token_DIVIDE  */
+    Token_LT = 289,                /* Token_LT  */
+    Token_GT = 290,                /* Token_GT  */
+    Token_EQ = 291,                /* Token_EQ  */
+    Token_LPAREN = 292,            /* Token_LPAREN  */
+    Token_RPAREN = 293,            /* Token_RPAREN  */
+    Token_LBRACKET = 294,          /* Token_LBRACKET  */
+    Token_RBRACKET = 295,          /* Token_RBRACKET  */
+    Token_SEMICOLON = 296,         /* Token_SEMICOLON  */
+    Token_COLON = 297,             /* Token_COLON  */
+    Token_COMMA = 298,             /* Token_COMMA  */
+    Token_PERIOD = 299,            /* Token_PERIOD  */
+    Token_ID = 300,                /* Token_ID  */
+    Token_NUMBER = 301             /* Token_NUMBER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -110,7 +111,7 @@ union YYSTYPE
     int ival;
     char *sval;
 
-#line 114 "parser.tab.h"
+#line 115 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
