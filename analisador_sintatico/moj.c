@@ -2830,70 +2830,82 @@ yyreduce:
     } else {
         printf("Rejeito, %d erros\n", tem_erro);
     }
+    for(int i = 0; i< num_simbolos; i++)
+    {
+        printf("%s ", Lista_simbolo[i].name);
+    }
 }
-# 1319 "parser.tab.c"
+# 1323 "parser.tab.c"
+    break;
+
+  case 15:
+# 102 "parser.y"
+                                                                                                                        {adiciona_simbolo((yyvsp[-6].sval),(yyvsp[-6].sval));}
+# 1329 "parser.tab.c"
+    break;
+
+  case 20:
+# 113 "parser.y"
+                                                                   {adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));}
+# 1335 "parser.tab.c"
     break;
 
   case 21:
-# 110 "parser.y"
+# 114 "parser.y"
                                  {adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));}
-# 1325 "parser.tab.c"
-    break;
-
-  case 31:
-# 132 "parser.y"
-                                                              {
-                            adiciona_simbolo((yyvsp[-3].sval), (yyvsp[-1].sval));
-                      }
-# 1333 "parser.tab.c"
-    break;
-
-  case 32:
-# 137 "parser.y"
-                                   {
-            adiciona_simbolo((yyvsp[0].sval), (yyvsp[-2].sval));
-       }
 # 1341 "parser.tab.c"
     break;
 
-  case 33:
-# 140 "parser.y"
-                 {
-            adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));
-       }
+  case 31:
+# 136 "parser.y"
+                                                              {
+                            adiciona_simbolo((yyvsp[-3].sval), (yyvsp[-1].sval));
+                      }
 # 1349 "parser.tab.c"
     break;
 
+  case 32:
+# 141 "parser.y"
+                                   {
+            adiciona_simbolo((yyvsp[0].sval), (yyvsp[-2].sval));
+       }
+# 1357 "parser.tab.c"
+    break;
+
+  case 33:
+# 144 "parser.y"
+                 {
+            adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));
+       }
+# 1365 "parser.tab.c"
+    break;
+
   case 51:
-# 184 "parser.y"
+# 188 "parser.y"
                                     {
                     if (!declarado((yyvsp[-1].sval))) {
                         tem_erro++;
                     }
                }
-# 1359 "parser.tab.c"
+# 1375 "parser.tab.c"
     break;
 
-  case 58:
-# 206 "parser.y"
-                                             {
-                        if ((yyvsp[0].sval) == 
-# 207 "parser.y" 3 4
-                                              ((void *)0)
-# 207 "parser.y"
-                                                  ) {
-                            if (!declarado((yyvsp[-1].sval))) {
-                                tem_erro = 1;
-                            }
-                        }
-                    }
-# 1371 "parser.tab.c"
+  case 71:
+# 233 "parser.y"
+                                        {if (!declarado((yyvsp[0].sval))) {tem_erro ++;}}
+# 1381 "parser.tab.c"
     break;
-# 1375 "parser.tab.c"
+
+  case 72:
+# 234 "parser.y"
+                                        {if (!declarado((yyvsp[0].sval))) {tem_erro ++;}}
+# 1387 "parser.tab.c"
+    break;
+# 1391 "parser.tab.c"
 
       default: break;
     }
-# 1389 "parser.tab.c"
+# 1405 "parser.tab.c"
   ;
 
   (yyvsp -= (yylen), yyssp -= (yylen));
@@ -3006,23 +3018,23 @@ yyerrlab1:
     }
 
  
-# 1500 "parser.tab.c"
+# 1516 "parser.tab.c"
 #pragma GCC diagnostic push
-# 1500 "parser.tab.c"
+# 1516 "parser.tab.c"
  
-# 1500 "parser.tab.c"
+# 1516 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wuninitialized"
-# 1500 "parser.tab.c"
+# 1516 "parser.tab.c"
  
-# 1500 "parser.tab.c"
+# 1516 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-# 1500 "parser.tab.c"
+# 1516 "parser.tab.c"
  
   *++yyvsp = yylval;
  
-# 1502 "parser.tab.c"
+# 1518 "parser.tab.c"
 #pragma GCC diagnostic pop
-# 1502 "parser.tab.c"
+# 1518 "parser.tab.c"
  
 
 
@@ -3087,13 +3099,13 @@ yyreturnlab:
 
   return yyresult;
 }
-# 266 "parser.y"
+# 264 "parser.y"
 
 void yyerror(const char *s) {
     fprintf(
-# 268 "parser.y" 3 4
+# 266 "parser.y" 3 4
            stderr
-# 268 "parser.y"
+# 266 "parser.y"
                  , "Rejeito\n");
 }
 

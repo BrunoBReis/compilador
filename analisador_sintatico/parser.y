@@ -57,7 +57,7 @@ void yyerror(const char *s);
 %type <ival> Token_NUMBER
 %type <sval> OU_ID
 %type <sval> FUNCAO_OU_NADA
-
+%type <sval> TERMO
 
 %%
 programa : Token_PROGRAM Token_ID Token_LPAREN OU_ID Token_RPAREN Token_SEMICOLON BLOCO Token_PERIOD {
@@ -65,6 +65,10 @@ programa : Token_PROGRAM Token_ID Token_LPAREN OU_ID Token_RPAREN Token_SEMICOLO
         printf("Aceito\n");
     } else {
         printf("Rejeito, %d erros\n", tem_erro);
+    }
+    for(int i = 0; i< num_simbolos; i++)
+    {
+        printf("%s ", Lista_simbolo[i].name);
     }
 }
          ;
@@ -95,7 +99,7 @@ OU_DECLARA_FUNCAO : OU_DECLARA_FUNCAO DECLARA_FUNCAO
                   | DECLARA_FUNCAO
                   ;
 
-DECLARA_FUNCAO : Token_FUNCTION Token_ID PARAMETROS_FORMAIS_NADA Token_COLON TIPO Token_SEMICOLON BLOCO Token_SEMICOLON
+DECLARA_FUNCAO : Token_FUNCTION Token_ID PARAMETROS_FORMAIS_NADA Token_COLON TIPO Token_SEMICOLON BLOCO Token_SEMICOLON {adiciona_simbolo($2,$2);}
               ;
 
 PARAMETROS_FORMAIS : SECAO_PARAMETROS_FORMAIS Token_SEMICOLON PARAMETROS_FORMAIS
@@ -106,7 +110,7 @@ SECAO_PARAMETROS_FORMAIS : OU_PARAMETROS_FORMAIS Token_COLON TIPO
                          | Token_VAR OU_PARAMETROS_FORMAIS Token_COLON TIPO
                          ;
 
-OU_PARAMETROS_FORMAIS : OU_PARAMETROS_FORMAIS Token_COMMA Token_ID
+OU_PARAMETROS_FORMAIS : OU_PARAMETROS_FORMAIS Token_COMMA Token_ID {adiciona_simbolo($3, $3);}
                       | Token_ID {adiciona_simbolo($1, $1);}
                       ;
 
@@ -203,13 +207,7 @@ CHAMADA_PROCEDIMENTO : Token_LPAREN OU_EXPRESSOES Token_RPAREN
 CHAMADA_FUNCAO : Token_LPAREN OU_EXPRESSOES Token_RPAREN
                ;
 
-FUNCAO_OU_VARIAVEL : Token_ID FUNCAO_OU_NADA {
-                        if ($2 == NULL) {
-                            if (!declarado($1)) {
-                                tem_erro = 1;
-                            }
-                        }
-                    }
+FUNCAO_OU_VARIAVEL : Token_ID FUNCAO_OU_NADA 
                    ;
 
 FUNCAO_OU_NADA : CHAMADA_FUNCAO
@@ -232,9 +230,9 @@ RELACAO : Token_EQ
         | Token_GT
         ;
 
-TERMO_SINAL_OPCIONAL: Token_MINUS TERMO
-                    | Token_PLUS TERMO
-                    | TERMO
+TERMO_SINAL_OPCIONAL: Token_MINUS TERMO {if (!declarado($2)) {tem_erro ++;}}
+                    | Token_PLUS TERMO  {if (!declarado($2)) {tem_erro ++;}}
+                    | TERMO             
                     ;
 
 EXPRESSAO_SIMPLES : TERMO_SINAL_OPCIONAL OPS_BASICAS

@@ -621,15 +621,15 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    63,    63,    72,    75,    78,    79,    82,    83,    86,
-      89,    90,    91,    94,    95,    98,   101,   102,   105,   106,
-     109,   110,   114,   115,   118,   120,   121,   124,   125,   128,
-     129,   132,   137,   140,   145,   148,   149,   152,   155,   156,
-     159,   160,   161,   162,   163,   164,   165,   166,   177,   180,
-     181,   184,   192,   195,   196,   199,   200,   203,   206,   215,
-     216,   219,   220,   223,   224,   227,   228,   229,   230,   231,
-     232,   235,   236,   237,   240,   241,   244,   245,   248,   249,
-     250,   254,   255,   256,   257,   260,   261,   262,   263
+       0,    63,    63,    76,    79,    82,    83,    86,    87,    90,
+      93,    94,    95,    98,    99,   102,   105,   106,   109,   110,
+     113,   114,   118,   119,   122,   124,   125,   128,   129,   132,
+     133,   136,   141,   144,   149,   152,   153,   156,   159,   160,
+     163,   164,   165,   166,   167,   168,   169,   170,   181,   184,
+     185,   188,   196,   199,   200,   203,   204,   207,   210,   213,
+     214,   217,   218,   221,   222,   225,   226,   227,   228,   229,
+     230,   233,   234,   235,   238,   239,   242,   243,   246,   247,
+     248,   252,   253,   254,   255,   258,   259,   260,   261
 };
 #endif
 
@@ -1314,64 +1314,80 @@ yyreduce:
     } else {
         printf("Rejeito, %d erros\n", tem_erro);
     }
+    for(int i = 0; i< num_simbolos; i++)
+    {
+        printf("%s ", Lista_simbolo[i].name);
+    }
 }
-#line 1319 "parser.tab.c"
+#line 1323 "parser.tab.c"
+    break;
+
+  case 15: /* DECLARA_FUNCAO: Token_FUNCTION Token_ID PARAMETROS_FORMAIS_NADA Token_COLON TIPO Token_SEMICOLON BLOCO Token_SEMICOLON  */
+#line 102 "parser.y"
+                                                                                                                        {adiciona_simbolo((yyvsp[-6].sval),(yyvsp[-6].sval));}
+#line 1329 "parser.tab.c"
+    break;
+
+  case 20: /* OU_PARAMETROS_FORMAIS: OU_PARAMETROS_FORMAIS Token_COMMA Token_ID  */
+#line 113 "parser.y"
+                                                                   {adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));}
+#line 1335 "parser.tab.c"
     break;
 
   case 21: /* OU_PARAMETROS_FORMAIS: Token_ID  */
-#line 110 "parser.y"
+#line 114 "parser.y"
                                  {adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));}
-#line 1325 "parser.tab.c"
-    break;
-
-  case 31: /* DECLARACAO_VARIAVEIS: OU_ID Token_COLON TIPO Token_SEMICOLON  */
-#line 132 "parser.y"
-                                                              {
-                            adiciona_simbolo((yyvsp[-3].sval), (yyvsp[-1].sval));
-                      }
-#line 1333 "parser.tab.c"
-    break;
-
-  case 32: /* OU_ID: OU_ID Token_COMMA Token_ID  */
-#line 137 "parser.y"
-                                   {
-            adiciona_simbolo((yyvsp[0].sval), (yyvsp[-2].sval));
-       }
 #line 1341 "parser.tab.c"
     break;
 
-  case 33: /* OU_ID: Token_ID  */
-#line 140 "parser.y"
-                 {
-            adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));
-       }
+  case 31: /* DECLARACAO_VARIAVEIS: OU_ID Token_COLON TIPO Token_SEMICOLON  */
+#line 136 "parser.y"
+                                                              {
+                            adiciona_simbolo((yyvsp[-3].sval), (yyvsp[-1].sval));
+                      }
 #line 1349 "parser.tab.c"
     break;
 
+  case 32: /* OU_ID: OU_ID Token_COMMA Token_ID  */
+#line 141 "parser.y"
+                                   {
+            adiciona_simbolo((yyvsp[0].sval), (yyvsp[-2].sval));
+       }
+#line 1357 "parser.tab.c"
+    break;
+
+  case 33: /* OU_ID: Token_ID  */
+#line 144 "parser.y"
+                 {
+            adiciona_simbolo((yyvsp[0].sval), (yyvsp[0].sval));
+       }
+#line 1365 "parser.tab.c"
+    break;
+
   case 51: /* ATRIBUICAO: Token_ASSIGN EXPRESSAO  */
-#line 184 "parser.y"
+#line 188 "parser.y"
                                     {
                     if (!declarado((yyvsp[-1].sval))) {
                         tem_erro++;
                     }
                }
-#line 1359 "parser.tab.c"
-    break;
-
-  case 58: /* FUNCAO_OU_VARIAVEL: Token_ID FUNCAO_OU_NADA  */
-#line 206 "parser.y"
-                                             {
-                        if ((yyvsp[0].sval) == NULL) {
-                            if (!declarado((yyvsp[-1].sval))) {
-                                tem_erro = 1;
-                            }
-                        }
-                    }
-#line 1371 "parser.tab.c"
-    break;
-
-
 #line 1375 "parser.tab.c"
+    break;
+
+  case 71: /* TERMO_SINAL_OPCIONAL: Token_MINUS TERMO  */
+#line 233 "parser.y"
+                                        {if (!declarado((yyvsp[0].sval))) {tem_erro ++;}}
+#line 1381 "parser.tab.c"
+    break;
+
+  case 72: /* TERMO_SINAL_OPCIONAL: Token_PLUS TERMO  */
+#line 234 "parser.y"
+                                        {if (!declarado((yyvsp[0].sval))) {tem_erro ++;}}
+#line 1387 "parser.tab.c"
+    break;
+
+
+#line 1391 "parser.tab.c"
 
       default: break;
     }
@@ -1564,7 +1580,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 266 "parser.y"
+#line 264 "parser.y"
 
 void yyerror(const char *s) {
     fprintf(stderr, "Rejeito\n");
