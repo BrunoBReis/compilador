@@ -49,7 +49,7 @@
 [[0-9]+(\.[0-9]+)?   { yylval.ival = atoi(yytext); return Token_NUMBER; }
 [ \t\n]         { }
 \(\*([^*]|\*+[^)])*\*+\) { }
-.               { fprintf(stderr, "Caractere inválido: %s\n", yytext); }
+.               {}
 %%
 
 int yywrap() {

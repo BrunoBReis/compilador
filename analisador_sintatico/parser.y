@@ -1,6 +1,36 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+typedef struct simbolo
+{
+    char *name;
+    int type;
+}simbolo;
+
+simbolo Lista_simbolo[1000];
+int num_simbolos = 0;
+int tem_erro=0;
+
+void adiciona_simbolo(char *name, int tipo)
+{
+    Lista_simbolo[num_simbolos].name = strdup(name);
+    Lista_simbolo[num_simbolos].type = tipo;
+    num_simbolos++;
+}
+
+int declarado(char *name)
+{
+    for(int i = 0; i< num_simbolos;i++)
+    {
+        if(strcmp(Lista_simbolo[i].name, name)==0){
+            return 1;
+        }
+    }
+    return 0;
+}
+
 
 extern int yylex();
 extern int yyparse();
@@ -22,12 +52,22 @@ void yyerror(const char *s);
 %token Token_ID Token_NUMBER token_INTEGER token_WRITE token_WRITELN token_READ token_BOOL
 
 %type <sval> Token_ID
+%type <sval> TIPO
+%type <sval> Token_ASSIGN
 %type <ival> Token_NUMBER
-
+%type <sval> OU_ID
+%type <sval> FUNCAO_OU_NADA
 
 
 %%
-programa: Token_PROGRAM Token_ID Token_LPAREN OU_ID Token_RPAREN Token_SEMICOLON BLOCO Token_PERIOD{ printf("Aceito\n"); }
+programa: Token_PROGRAM Token_ID Token_LPAREN OU_ID Token_RPAREN Token_SEMICOLON BLOCO Token_PERIOD{ 
+    if(tem_erro == 0){
+        printf("Aceito\n");
+    }else
+    {
+        printf("Rejeito \n", tem_erro);
+    }
+}
         ;
 
 TIPO: Token_ID
@@ -79,11 +119,18 @@ OU_DECLARACAO_VARIAVEIS: OU_DECLARACAO_VARIAVEIS  DECLARACAO_VARIAVEIS
                        | DECLARACAO_VARIAVEIS
                        ;
                        
-DECLARACAO_VARIAVEIS: OU_ID Token_COLON TIPO Token_SEMICOLON
-        ;
+DECLARACAO_VARIAVEIS: OU_ID Token_COLON TIPO Token_SEMICOLON {
+                    
+}
+                    ;
         
-OU_ID: OU_ID Token_COMMA Token_ID
-     | Token_ID
+OU_ID: OU_ID Token_COMMA Token_ID {
+                         
+                        adiciona_simbolo($3, $3);
+                        }
+     | Token_ID{        
+                        adiciona_simbolo($1, $1);
+                        }
      ;
 
 COMANDO_COMPOSTO: Token_BEGIN OU_COMANDO Token_END
@@ -105,7 +152,10 @@ COMANDO_SEM_ROTULO: ATRIBUICAO_OU_CHAMADA
                   | token_READ Token_LPAREN PARAMETROS_WRITE Token_RPAREN
                   ;
 
-PARAMETROS_WRITE: Token_ID
+PARAMETROS_WRITE: Token_ID {
+                if(!declarado($1)){
+                    tem_erro = 1;
+                }}
                 | Token_NUMBER
                 ;
 
@@ -116,7 +166,14 @@ DECIDE: ATRIBUICAO
       | CHAMADA_PROCEDIMENTO
       ;
 
-ATRIBUICAO: Token_ASSIGN EXPRESSAO
+ATRIBUICAO: Token_ASSIGN EXPRESSAO {
+        
+        if(!declarado($1)){
+            tem_erro++;
+
+        }
+    
+    }
         ;
 
 
@@ -130,6 +187,24 @@ COMANDO_CONDICIONAL: Token_IF EXPRESSAO Token_THEN COMANDO_SEM_ROTULO Token_ELSE
 CHAMADA_PROCEDIMENTO: Token_LPAREN OU_EXPRESSOES Token_RPAREN
                     | 
                     ;
+
+CHAMADA_FUNCAO: Token_LPAREN OU_EXPRESSOES Token_RPAREN
+              ;
+
+FUNCAO_OU_VARIAVEL: Token_ID FUNCAO_OU_NADA {
+    if($2 == NULL)
+    {
+        if(!declarado($1))
+        {
+            tem_erro =1;
+        }
+    }
+}
+                  ;
+
+FUNCAO_OU_NADA: CHAMADA_FUNCAO
+              |
+              ;
 
 OU_EXPRESSOES: OU_EXPRESSOES Token_COMMA EXPRESSAO
              | EXPRESSAO
@@ -159,7 +234,7 @@ TERMO: FATOR Token_AND FATOR
      | FATOR
      ;
 
-FATOR: Token_ID
+FATOR: FUNCAO_OU_VARIAVEL
      | Token_NUMBER
      | Token_LPAREN EXPRESSAO Token_RPAREN
      | Token_NOT FATOR

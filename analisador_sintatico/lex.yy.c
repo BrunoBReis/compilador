@@ -1033,7 +1033,7 @@ YY_RULE_SETUP
 case 47:
 YY_RULE_SETUP
 #line 52 "lexico.l"
-{ fprintf(stderr, "Caractere inválido: %s\n", yytext); }
+{}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
