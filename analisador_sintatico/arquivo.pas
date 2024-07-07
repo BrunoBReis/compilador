@@ -1,2 +1,4 @@
-program exemplo73 (input, output);
-var n, s, i :integer;.
+program olamundo(input,output);
+begin
+  write(42)
+end.

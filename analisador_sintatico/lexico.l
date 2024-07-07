@@ -23,8 +23,6 @@
 "type"          { return Token_TYPE; }
 "var"           { return Token_VAR; }
 "while"         { return Token_WHILE; }
-"integer"       { return token_INTEGER; }
-"bool"          { return token_BOOL; }
 "write"         { return token_WRITE; }
 "writeln"         { return token_WRITELN; }
 "read"         { return token_READ; }

@@ -27,245 +27,143 @@ void yyerror(const char *s);
 
 
 %%
-programa:
-  Token_PROGRAM Token_ID Token_LPAREN OU_ID Token_RPAREN Token_SEMICOLON BLOCO Token_PERIOD {printf("Aceito\n");}
-;
-
-BLOCO:PARTE_DECLARACAO_VARIAVEIS 
-     |PARTE_DECLARACAO_SUBROTINAS 
-     |COMANDO_COMPOSTO
-     ;
-
-PARTE_DECLARACAO_VARIAVEIS:
-  Token_VAR OU_DECLARACAO_VARIAVEIS Token_SEMICOLON
-  |
-;
-
-OU_DECLARACAO_VARIAVEIS: 
-  OU_DECLARACAO_VARIAVEIS Token_SEMICOLON DECLARACAO_VARIAVEIS
-  | DECLARACAO_VARIAVEIS
-;
-
-DECLARACAO_VARIAVEIS:
-  OU_ID Token_COLON TIPO
-;
-
-OU_ID:
-  OU_ID Token_COMMA Token_ID
-  | Token_ID
-;
+programa: Token_PROGRAM Token_ID Token_LPAREN OU_ID Token_RPAREN Token_SEMICOLON BLOCO Token_PERIOD{ printf("Aceito\n"); }
+        ;
 
 TIPO: Token_ID
-;
+    ;
 
-PARTE_DECLARACAO_SUBROTINAS: DECLARACAO_PROCEDIMENTO_NADA 
-                           | DECLARA_FUNCOES_NADA
+
+BLOCO: PARTE_DECLARACAO_VARIAVEIS PARTE_DECLARACAO_SUBROTINAS COMANDO_COMPOSTO
+     ;
+
+PARTE_DECLARACAO_SUBROTINAS: OU_DECLARA_PROCEDIMENTO
+                           | OU_DECLARA_FUNCAO
+                           |
                            ;
 
-DECLARACAO_PROCEDIMENTO_NADA:
-  DECLARACAO_PROCEDIMENTO
-  |
-;
+OU_DECLARA_FUNCAO: OU_DECLARA_FUNCAO DECLARA_FUNCAO
+                 | DECLARA_FUNCAO
+                 ;
 
-DECLARA_FUNCOES_NADA:
-  DECLARA_FUNCOES
-  |
-;
+DECLARA_FUNCAO: Token_FUNCTION Token_ID PARAMETROS_FORMAIS Token_COLON TIPO Token_SEMICOLON BLOCO Token_SEMICOLON
+             ;
 
-DECLARACAO_PROCEDIMENTOS:
-  DECLARACAO_PROCEDIMENTO DECLARACAO_PROCEDIMENTOS
-  | DECLARACAO_PROCEDIMENTO
-;
+PARAMETROS_FORMAIS: SECAO_PARAMETROS_FORMAIS Token_SEMICOLON PARAMETROS_FORMAIS
+                  | SECAO_PARAMETROS_FORMAIS
+                  ;
 
-DECLARACAO_PROCEDIMENTO:
-  Token_PROCEDURE Token_ID PARAMETROS_FORMAIS_NADA Token_SEMICOLON BLOCO Token_SEMICOLON
-;
+SECAO_PARAMETROS_FORMAIS: OU_PARAMETROS_FORMAIS Token_COLON TIPO
+                        | Token_VAR OU_PARAMETROS_FORMAIS Token_COLON TIPO
+                        ;
 
-DECLARA_FUNCOES:
-  DECLARA_FUNCAO DECLARA_FUNCOES
-  | DECLARA_FUNCAO
-;
+OU_PARAMETROS_FORMAIS: OU_PARAMETROS_FORMAIS Token_COMMA Token_ID
+                     | Token_ID
+                     ;
 
-DECLARA_FUNCAO:
-  Token_FUNCTION Token_ID PARAMETROS_FORMAIS_NADA Token_COLON TIPO_FUNC Token_SEMICOLON BLOCO Token_SEMICOLON
-;
 
-TIPO_FUNC:
-  token_INTEGER
-  | token_BOOL
-  | Token_ID
-;
+OU_DECLARA_PROCEDIMENTO:OU_DECLARA_PROCEDIMENTO DECLARACAO_PROCEDIMENTO
+                       |DECLARACAO_PROCEDIMENTO
+                       ;
 
-PARAMETROS_FORMAIS_NADA:
-  Token_LPAREN PARAMETROS_FORMAIS Token_RPAREN
-  |
-;
+DECLARACAO_PROCEDIMENTO: Token_PROCEDURE Token_ID PARAMETROS_FORMAIS Token_SEMICOLON BLOCO Token_SEMICOLON
+                        | Token_PROCEDURE Token_ID Token_SEMICOLON BLOCO Token_SEMICOLON
+                        ;
 
-PARAMETROS_FORMAIS:
-  SECAO_PARAMETROS_FORMAIS Token_SEMICOLON PARAMETROS_FORMAIS
-  | SECAO_PARAMETROS_FORMAIS
-;
 
-SECAO_PARAMETROS_FORMAIS:
-  OU_PARAMETROS_FORMAIS Token_COLON TIPO_FORMAL
-  | Token_VAR OU_PARAMETROS_FORMAIS Token_COLON TIPO_FORMAL
-;
+PARTE_DECLARACAO_VARIAVEIS: Token_VAR OU_DECLARACAO_VARIAVEIS 
+                          |
+                          ;
 
-OU_PARAMETROS_FORMAIS:
-  OU_PARAMETROS_FORMAIS Token_COMMA Token_ID
-  | Token_ID
-;
+OU_DECLARACAO_VARIAVEIS: OU_DECLARACAO_VARIAVEIS  DECLARACAO_VARIAVEIS
+                       | DECLARACAO_VARIAVEIS
+                       ;
+                       
+DECLARACAO_VARIAVEIS: OU_ID Token_COLON TIPO Token_SEMICOLON
+        ;
+        
+OU_ID: OU_ID Token_COMMA Token_ID
+     | Token_ID
+     ;
 
-TIPO_FORMAL:
-  token_INTEGER
-  | token_BOOL
-  | Token_ID
-;
+COMANDO_COMPOSTO: Token_BEGIN OU_COMANDO Token_END
+                ;
 
-COMANDO_COMPOSTO:Token_BEGIN COMANDOS Token_END
-                | Token_BEGIN Token_END
-;
+OU_COMANDO: OU_COMANDO Token_SEMICOLON COMANDO
+          | COMANDO
+          ;
 
-COMANDOS: COMANDO Token_SEMICOLON COMANDOS
-        | COMANDO
-        | COMANDO Token_SEMICOLON
-;
+COMANDO: COMANDO_SEM_ROTULO
+    ;
 
-COMANDO:
-  ROTULO COMANDO_SEM_ROTULO
-;
+COMANDO_SEM_ROTULO: ATRIBUICAO_OU_CHAMADA
+                  | COMANDO_REPETITIVO
+                  | COMANDO_CONDICIONAL
+                  | COMANDO_COMPOSTO
+                  | token_WRITE Token_LPAREN PARAMETROS_WRITE Token_RPAREN
+                  | token_WRITELN Token_LPAREN PARAMETROS_WRITE Token_RPAREN
+                  | token_READ Token_LPAREN PARAMETROS_WRITE Token_RPAREN
+                  ;
 
-ROTULO:
-  Token_NUMBER Token_COLON
-  |
-;
+PARAMETROS_WRITE: Token_ID
+                | Token_NUMBER
+                ;
 
-COMANDO_SEM_ROTULO:
-  ATRIBUICAO_CHAMADA_PROCEDIMENTO
-  | COMANDO_REPETITIVO
-  | COMANDO_CONDICIONAL
-  | COMANDO_COMPOSTO
-  | token_READ Token_LPAREN params_read Token_RPAREN
-  | token_WRITE Token_LPAREN params_write Token_RPAREN
-  | token_WRITELN Token_LPAREN params_write Token_RPAREN
-;
+ATRIBUICAO_OU_CHAMADA: Token_ID DECIDE
+          ;
 
-ATRIBUICAO_CHAMADA_PROCEDIMENTO:
-  Token_ID ATRIBUICAO_OU_CHAMADA
-;
+DECIDE: ATRIBUICAO
+      | CHAMADA_PROCEDIMENTO
+      ;
 
-ATRIBUICAO_OU_CHAMADA:
-  ATRIBUICAO
-  | CHAMADA_PROCEDIMENTO
-;
+ATRIBUICAO: Token_ASSIGN EXPRESSAO
+        ;
 
-ATRIBUICAO:
-  Token_ASSIGN EXPRESSAO
-;
 
-CHAMADA_PROCEDIMENTO:
-  Token_LPAREN OU_EXPRESSOES Token_RPAREN
-  | Token_LPAREN Token_RPAREN
-  |
-;
+COMANDO_REPETITIVO: Token_WHILE EXPRESSAO Token_DO COMANDO_SEM_ROTULO
+                ;
 
-OU_EXPRESSOES:
-  EXPRESSAO Token_COMMA OU_EXPRESSOES
-  | EXPRESSAO
-;
+COMANDO_CONDICIONAL: Token_IF EXPRESSAO Token_THEN COMANDO_SEM_ROTULO Token_ELSE COMANDO_SEM_ROTULO
+                   | Token_IF EXPRESSAO Token_THEN COMANDO_SEM_ROTULO
+                   ;
 
-params_read:
-  params_read Token_COMMA Token_ID
-  | Token_ID
-;
+CHAMADA_PROCEDIMENTO: Token_LPAREN OU_EXPRESSOES Token_RPAREN
+                    | 
+                    ;
 
-params_write:
-  params_write Token_COMMA Token_ID
-  | Token_ID
-  | Token_NUMBER
-;
+OU_EXPRESSOES: OU_EXPRESSOES Token_COMMA EXPRESSAO
+             | EXPRESSAO
+             ;
 
-COMANDO_REPETITIVO:
-  Token_WHILE EXPRESSAO Token_DO COMANDO_SEM_ROTULO
-;
+EXPRESSAO: EXPRESSAO_SIMPLES RELACAO EXPRESSAO_SIMPLES
+         | EXPRESSAO_SIMPLES
+         ;
 
-COMANDO_CONDICIONAL:
-  if_then cond_else
-;
+RELACAO: Token_EQ
+       | Token_NE
+       | Token_LT
+       | Token_LE
+       | Token_GE
+       | Token_GT
+       ;
 
-if_then:
-  Token_IF EXPRESSAO Token_THEN COMANDO_SEM_ROTULO
-;
+EXPRESSAO_SIMPLES: TERMO Token_OR TERMO
+                 | TERMO Token_MINUS TERMO
+                 | TERMO Token_PLUS TERMO
+                 | TERMO
+                 ;
 
-cond_else:
-  Token_ELSE COMANDO_SEM_ROTULO
-;
+TERMO: FATOR Token_AND FATOR
+     | FATOR Token_DIV FATOR
+     | FATOR Token_MULT FATOR
+     | FATOR
+     ;
 
-RELACAO_E_EXPRESSAO_SIMPLES:
-  Token_EQ EXPRESSAO_SIMPLES
-  | Token_NE EXPRESSAO_SIMPLES
-  | Token_LT EXPRESSAO_SIMPLES
-  | Token_LE EXPRESSAO_SIMPLES
-  | Token_GT EXPRESSAO_SIMPLES
-  | Token_GE EXPRESSAO_SIMPLES
-;
-
-EXPRESSAO:
-  EXPRESSAO_SIMPLES
-  | EXPRESSAO_SIMPLES RELACAO_E_EXPRESSAO_SIMPLES
-;
-
-termo_com_sinal_opcional:
-  Token_MINUS TERMO
-  | Token_PLUS TERMO
-  | TERMO
-;
-
-EXPRESSAO_SIMPLES:
-  termo_com_sinal_opcional OP.BASICAS
-  | termo_com_sinal_opcional
-;
-
-OP.BASICAS:
-  operacao_basica OP.BASICAS
-  | operacao_basica
-;
-
-operacao_basica:
-  Token_PLUS TERMO
-  | Token_PLUS TERMO
-  | Token_OR TERMO
-;
-
-TERMO:
-  FATOR Token_MULT FATOR
-  | FATOR Token_DIV FATOR
-  | FATOR Token_AND FATOR
-  | FATOR
-;
-
-FATOR:
-  variavel_ou_funcao
-  | Token_NUMBER
-  | Token_LPAREN EXPRESSAO Token_RPAREN
-  | Token_NOT FATOR
-;
-
-variavel_ou_funcao:
-  Token_ID funcao_ou_nada
-;
-
-funcao_ou_nada:
-  chamada_funcao
-  |
-;
-
-chamada_funcao:
-    Token_LPAREN
-    OU_EXPRESSOES
-    Token_RPAREN
-  | Token_LPAREN  Token_RPAREN
-;
+FATOR: Token_ID
+     | Token_NUMBER
+     | Token_LPAREN EXPRESSAO Token_RPAREN
+     | Token_NOT FATOR
+     ;
 
 %%
 void yyerror(const char *s) {
