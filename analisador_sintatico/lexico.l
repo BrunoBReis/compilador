@@ -3,6 +3,7 @@
 %}
 
 %%
+"teste"         { return Token_TESTE; }
 "and"           { return Token_AND; }
 "array"         { return Token_ARRAY; }
 "begin"         { return Token_BEGIN; }
@@ -26,8 +27,8 @@
 "integer"       { return token_INTEGER; }
 "bool"          { return token_BOOL; }
 "write"         { return token_WRITE; }
-"writeln"         { return token_WRITELN; }
-"read"         { return token_READ; }
+"writeln"       { return token_WRITELN; }
+"read"          { return token_READ; }
 ":="            { return Token_ASSIGN; }
 "<="            { return Token_LE; }
 ">="            { return Token_GE; }

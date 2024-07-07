@@ -102,7 +102,8 @@ extern int yydebug;
     token_WRITE = 303,             /* token_WRITE  */
     token_WRITELN = 304,           /* token_WRITELN  */
     token_READ = 305,              /* token_READ  */
-    token_BOOL = 306               /* token_BOOL  */
+    token_BOOL = 306,              /* token_BOOL  */
+    Token_TESTE = 307              /* Token_TESTE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -116,7 +117,7 @@ union YYSTYPE
     int ival;
     char *sval;
 
-#line 120 "parser.tab.h"
+#line 121 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
