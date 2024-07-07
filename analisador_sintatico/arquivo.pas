@@ -1,2 +1,2 @@
-program exemplo5 (input, output);
-var n, k : integer; f1 : integer;.
+program exemplo73 (input, output);
+var n, s, i :integer;.

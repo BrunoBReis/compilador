@@ -1888,7 +1888,12 @@ void yyerror(const char *s);
     Token_COMMA = 298,
     Token_PERIOD = 299,
     Token_ID = 300,
-    Token_NUMBER = 301
+    Token_NUMBER = 301,
+    token_INTEGER = 302,
+    token_WRITE = 303,
+    token_WRITELN = 304,
+    token_READ = 305,
+    token_BOOL = 306
   };
   typedef enum yytokentype yytoken_kind_t;
 
@@ -1901,7 +1906,7 @@ union YYSTYPE
 
     int ival;
     char *sval;
-# 115 "parser.tab.h"
+# 120 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -1966,33 +1971,22 @@ enum yysymbol_kind_t
   YYSYMBOL_Token_PERIOD = 44,
   YYSYMBOL_Token_ID = 45,
   YYSYMBOL_Token_NUMBER = 46,
-  YYSYMBOL_YYACCEPT = 47,
-  YYSYMBOL_programa = 48,
-  YYSYMBOL_TIPO = 49,
-  YYSYMBOL_BLOCO = 50,
-  YYSYMBOL_PARTE_DECLARACAO_SUBROTINAS = 51,
-  YYSYMBOL_DECLARACAO_PROCEDIMENTO = 52,
-  YYSYMBOL_PARTE_DECLARACAO_VARIAVEIS = 53,
-  YYSYMBOL_OU_DECLARACAO_VARIAVEIS = 54,
-  YYSYMBOL_DECLARACAO_VARIAVEIS = 55,
-  YYSYMBOL_OU_ID = 56,
-  YYSYMBOL_COMANDO_COMPOSTO = 57,
-  YYSYMBOL_OU_COMANDO = 58,
-  YYSYMBOL_COMANDO = 59,
-  YYSYMBOL_COMANDO_SEM_ROTULO = 60,
-  YYSYMBOL_COMANDO_REPETITIVO = 61,
-  YYSYMBOL_COMANDO_CONDICIONAL = 62,
-  YYSYMBOL_ATRIBUICAO = 63,
-  YYSYMBOL_CHAMADA_PROCEDIMENTO = 64,
-  YYSYMBOL_OU_EXPRESSOES = 65,
-  YYSYMBOL_EXPRESSAO = 66,
-  YYSYMBOL_RELACAO = 67,
-  YYSYMBOL_EXPRESSAO_SIMPLES = 68,
-  YYSYMBOL_TERMO = 69,
-  YYSYMBOL_FATOR = 70
+  YYSYMBOL_token_INTEGER = 47,
+  YYSYMBOL_token_WRITE = 48,
+  YYSYMBOL_token_WRITELN = 49,
+  YYSYMBOL_token_READ = 50,
+  YYSYMBOL_token_BOOL = 51,
+  YYSYMBOL_YYACCEPT = 52,
+  YYSYMBOL_programa = 53,
+  YYSYMBOL_BLOCO = 54,
+  YYSYMBOL_PARTE_DECLARACAO_VARIAVEIS = 55,
+  YYSYMBOL_OU_DECLARACAO_VARIAVEIS = 56,
+  YYSYMBOL_DECLARACAO_VARIAVEIS = 57,
+  YYSYMBOL_OU_ID = 58,
+  YYSYMBOL_TIPO = 59
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
-# 208 "parser.tab.c"
+# 197 "parser.tab.c"
 typedef signed char yytype_int8;
 
 
@@ -2002,22 +1996,22 @@ typedef signed char yytype_int8;
 
 
 typedef short int yytype_int16;
-# 236 "parser.tab.c"
+# 225 "parser.tab.c"
 typedef unsigned char yytype_uint8;
-# 247 "parser.tab.c"
+# 236 "parser.tab.c"
 typedef short unsigned int yytype_uint16;
-# 296 "parser.tab.c"
+# 285 "parser.tab.c"
 typedef yytype_int8 yy_state_t;
 
 
 typedef int yy_state_fast_t;
-# 449 "parser.tab.c"
+# 438 "parser.tab.c"
 union yyalloc
 {
   yy_state_t yyss_alloc;
   YYSTYPE yyvs_alloc;
 };
-# 531 "parser.tab.c"
+# 520 "parser.tab.c"
 static const yytype_int8 yytranslate[] =
 {
        0, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2050,21 +2044,14 @@ static const yytype_int8 yytranslate[] =
       15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
       25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
       35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
-      45, 46
+      45, 46, 47, 48, 49, 50, 51
 };
-# 629 "parser.tab.c"
+# 611 "parser.tab.c"
 static const yytype_int8 yypact[] =
 {
-      -7, -20, 29, -4, -50, -8, -50, -11, -6, 11,
-       5, -50, -3, 12, -8, 14, -50, -50, -50, -50,
-     -25, -25, -19, -50, -5, -50, -50, -50, -50, -50,
-     -50, 18, 19, -50, -29, -50, -25, -50, -50, 43,
-      16, 0, 2, 31, -25, -25, 22, -3, 5, -8,
-      20, 26, -3, -50, -50, -50, -50, -50, -50, -25,
-     -25, -25, -25, -25, -25, -25, -3, -50, 3, -50,
-       5, -50, -50, -50, -50, -50, -50, 59, -50, -50,
-     -50, -50, -50, -50, -50, -50, -50, -25, -50, -3,
-     -50, -50
+     -15, -39, 4, -30, -42, -37, -42, -38, -32, -35,
+     -10, -42, -37, -31, -42, -29, -42, -41, -42, -37,
+     -28, -42, -42, -42
 };
 
 
@@ -2072,32 +2059,21 @@ static const yytype_int8 yypact[] =
 
 static const yytype_int8 yydefact[] =
 {
-       0, 0, 0, 0, 1, 0, 16, 0, 0, 0,
-       7, 15, 0, 0, 0, 0, 4, 8, 5, 6,
-       0, 0, 32, 24, 0, 20, 21, 26, 25, 22,
-      23, 0, 0, 13, 0, 2, 0, 51, 52, 0,
-      36, 46, 50, 0, 0, 0, 17, 0, 7, 11,
-       0, 0, 0, 40, 41, 38, 39, 42, 37, 0,
-       0, 0, 0, 0, 0, 0, 0, 30, 0, 34,
-       7, 19, 10, 12, 3, 14, 53, 29, 35, 43,
-      45, 44, 47, 48, 49, 27, 31, 0, 18, 0,
-      33, 28
+       0, 0, 0, 0, 1, 0, 10, 0, 0, 0,
+       5, 9, 0, 0, 3, 0, 7, 0, 2, 4,
+       0, 6, 11, 8
 };
 
 
 static const yytype_int8 yypgoto[] =
 {
-     -50, -50, -50, -42, -50, -50, -50, -50, 21, 63,
-      -9, -50, 24, -49, -50, -50, -50, -50, -50, -21,
-     -50, 10, -13, -10
+     -42, -42, -42, -42, -42, -5, 10, -42
 };
 
 
 static const yytype_int8 yydefgoto[] =
 {
-       0, 2, 75, 15, 16, 17, 18, 32, 33, 34,
-      23, 24, 25, 26, 27, 28, 29, 30, 68, 39,
-      59, 40, 41, 42
+       0, 2, 13, 14, 15, 16, 17, 23
 };
 
 
@@ -2105,69 +2081,42 @@ static const yytype_int8 yydefgoto[] =
 
 static const yytype_int8 yytable[] =
 {
-      43, 19, 12, 77, 46, 63, 72, 44, 64, 20,
-      12, 1, 36, 50, 9, 51, 60, 85, 45, 21,
-      37, 38, 13, 67, 69, 3, 14, 8, 88, 4,
-      61, 62, 9, 5, 65, 10, 47, 6, 66, 19,
-      91, 86, 22, 53, 54, 55, 87, 79, 80, 81,
-      56, 57, 58, 82, 83, 84, 11, 31, 35, 48,
-      49, 19, 52, 70, 76, 74, 90, 89, 7, 78,
-      73, 71
+       8, 20, 9, 1, 4, 9, 3, 5, 6, 10,
+      11, 12, 19, 18, 21, 7, 0, 22
 };
 
 static const yytype_int8 yycheck[] =
 {
-      21, 10, 5, 52, 9, 3, 48, 26, 6, 12,
-       5, 18, 37, 42, 43, 36, 16, 66, 37, 22,
-      45, 46, 17, 44, 45, 45, 21, 38, 70, 0,
-      30, 31, 43, 37, 32, 41, 41, 45, 7, 48,
-      89, 38, 45, 27, 28, 29, 43, 60, 61, 62,
-      34, 35, 36, 63, 64, 65, 45, 45, 44, 41,
-      41, 70, 19, 41, 38, 45, 87, 8, 5, 59,
-      49, 47
+      38, 42, 43, 18, 0, 43, 45, 37, 45, 41,
+      45, 21, 41, 44, 19, 5, -1, 45
 };
 
 
 
 static const yytype_int8 yystos[] =
 {
-       0, 18, 48, 45, 0, 37, 45, 56, 38, 43,
-      41, 45, 5, 17, 21, 50, 51, 52, 53, 57,
-      12, 22, 45, 57, 58, 59, 60, 61, 62, 63,
-      64, 45, 54, 55, 56, 44, 37, 45, 46, 66,
-      68, 69, 70, 66, 26, 37, 9, 41, 41, 41,
-      42, 66, 19, 27, 28, 29, 34, 35, 36, 67,
-      16, 30, 31, 3, 6, 32, 7, 66, 65, 66,
-      41, 59, 50, 55, 45, 49, 38, 60, 68, 69,
-      69, 69, 70, 70, 70, 60, 38, 43, 50, 8,
-      66, 60
+       0, 18, 53, 45, 0, 37, 45, 58, 38, 43,
+      41, 45, 21, 54, 55, 56, 57, 58, 44, 41,
+      42, 57, 45, 59
 };
 
 
 static const yytype_int8 yyr1[] =
 {
-       0, 47, 48, 49, 50, 50, 50, 50, 51, 51,
-      52, 53, 54, 54, 55, 56, 56, 57, 57, 58,
-      58, 59, 60, 60, 60, 60, 60, 61, 62, 62,
-      63, 64, 64, 65, 65, 66, 66, 67, 67, 67,
-      67, 67, 67, 68, 68, 68, 68, 69, 69, 69,
-      69, 70, 70, 70
+       0, 52, 53, 54, 55, 55, 56, 56, 57, 58,
+      58, 59
 };
 
 
 static const yytype_int8 yyr2[] =
 {
-       0, 2, 8, 1, 1, 1, 1, 0, 1, 0,
-       4, 3, 3, 1, 3, 3, 1, 3, 5, 3,
-       1, 1, 1, 1, 1, 1, 1, 4, 6, 4,
-       3, 4, 1, 3, 1, 3, 1, 1, 1, 1,
-       1, 1, 1, 3, 3, 3, 1, 3, 3, 3,
-       1, 1, 1, 3
+       0, 2, 8, 1, 3, 0, 3, 1, 3, 3,
+       1, 1
 };
 
 
 enum { YYENOMEM = -2 };
-# 929 "parser.tab.c"
+# 866 "parser.tab.c"
 static void
 yydestruct (const char *yymsg,
             yysymbol_kind_t yykind, YYSTYPE *yyvaluep)
@@ -2178,23 +2127,23 @@ yydestruct (const char *yymsg,
   ;
 
  
-# 938 "parser.tab.c"
+# 875 "parser.tab.c"
 #pragma GCC diagnostic push
-# 938 "parser.tab.c"
+# 875 "parser.tab.c"
  
-# 938 "parser.tab.c"
+# 875 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wuninitialized"
-# 938 "parser.tab.c"
+# 875 "parser.tab.c"
  
-# 938 "parser.tab.c"
+# 875 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-# 938 "parser.tab.c"
+# 875 "parser.tab.c"
  
   ((void) (yykind));
  
-# 940 "parser.tab.c"
+# 877 "parser.tab.c"
 #pragma GCC diagnostic pop
-# 940 "parser.tab.c"
+# 877 "parser.tab.c"
  
 }
 
@@ -2206,7 +2155,7 @@ int yychar;
 YYSTYPE yylval;
 
 int yynerrs;
-# 959 "parser.tab.c"
+# 896 "parser.tab.c"
 int
 yyparse (void)
 {
@@ -2268,7 +2217,7 @@ yynewstate:
 
 yysetstate:
   ((void) 0);
-  ((void) (0 && (0 <= yystate && yystate < 92)));
+  ((void) (0 && (0 <= yystate && yystate < 24)));
  
   *yyssp = ((yy_state_t) (yystate));
  
@@ -2281,7 +2230,7 @@ yysetstate:
     {
 
       long int yysize = yyssp - yyss + 1;
-# 1055 "parser.tab.c"
+# 992 "parser.tab.c"
       if (10000 <= yystacksize)
         goto yyexhaustedlab;
       yystacksize *= 2;
@@ -2332,7 +2281,7 @@ yybackup:
 
 
   yyn = yypact[yystate];
-  if (((yyn) == (-50)))
+  if (((yyn) == (-42)))
     goto yydefault;
 
 
@@ -2362,14 +2311,14 @@ yybackup:
     }
   else
     {
-      yytoken = (0 <= (yychar) && (yychar) <= 301 ? ((yysymbol_kind_t) (yytranslate[yychar])) : YYSYMBOL_YYUNDEF);
+      yytoken = (0 <= (yychar) && (yychar) <= 306 ? ((yysymbol_kind_t) (yytranslate[yychar])) : YYSYMBOL_YYUNDEF);
       ;
     }
 
 
 
   yyn += yytoken;
-  if (yyn < 0 || 71 < yyn || yycheck[yyn] != yytoken)
+  if (yyn < 0 || 17 < yyn || yycheck[yyn] != yytoken)
     goto yydefault;
   yyn = yytable[yyn];
   if (yyn <= 0)
@@ -2389,23 +2338,23 @@ yybackup:
   ;
   yystate = yyn;
  
-# 1161 "parser.tab.c"
+# 1098 "parser.tab.c"
 #pragma GCC diagnostic push
-# 1161 "parser.tab.c"
+# 1098 "parser.tab.c"
  
-# 1161 "parser.tab.c"
+# 1098 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wuninitialized"
-# 1161 "parser.tab.c"
+# 1098 "parser.tab.c"
  
-# 1161 "parser.tab.c"
+# 1098 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-# 1161 "parser.tab.c"
+# 1098 "parser.tab.c"
  
   *++yyvsp = yylval;
  
-# 1163 "parser.tab.c"
+# 1100 "parser.tab.c"
 #pragma GCC diagnostic pop
-# 1163 "parser.tab.c"
+# 1100 "parser.tab.c"
  
 
 
@@ -2429,7 +2378,7 @@ yydefault:
 yyreduce:
 
   yylen = yyr2[yyn];
-# 1195 "parser.tab.c"
+# 1132 "parser.tab.c"
   yyval = yyvsp[1-yylen];
 
 
@@ -2437,15 +2386,15 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-# 30 "parser.y"
-                                                                                                   { printf("Aceito\n"); }
-# 1205 "parser.tab.c"
+# 31 "parser.y"
+                                                                                            {printf("Aceito\n");}
+# 1142 "parser.tab.c"
     break;
-# 1209 "parser.tab.c"
+# 1146 "parser.tab.c"
 
       default: break;
     }
-# 1223 "parser.tab.c"
+# 1160 "parser.tab.c"
   ;
 
   (yyvsp -= (yylen), yyssp -= (yylen));
@@ -2457,9 +2406,9 @@ yyreduce:
 
 
   {
-    const int yylhs = yyr1[yyn] - 47;
+    const int yylhs = yyr1[yyn] - 52;
     const int yyi = yypgoto[yylhs] + *yyssp;
-    yystate = (0 <= yyi && yyi <= 71 && yycheck[yyi] == *yyssp
+    yystate = (0 <= yyi && yyi <= 17 && yycheck[yyi] == *yyssp
                ? yytable[yyi]
                : yydefgoto[yylhs]);
   }
@@ -2473,7 +2422,7 @@ yyreduce:
 yyerrlab:
 
 
-  yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : (0 <= (yychar) && (yychar) <= 301 ? ((yysymbol_kind_t) (yytranslate[yychar])) : YYSYMBOL_YYUNDEF);
+  yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : (0 <= (yychar) && (yychar) <= 306 ? ((yysymbol_kind_t) (yytranslate[yychar])) : YYSYMBOL_YYUNDEF);
 
   if (!yyerrstatus)
     {
@@ -2534,10 +2483,10 @@ yyerrlab1:
   for (;;)
     {
       yyn = yypact[yystate];
-      if (!((yyn) == (-50)))
+      if (!((yyn) == (-42)))
         {
           yyn += YYSYMBOL_YYerror;
-          if (0 <= yyn && yyn <= 71 && yycheck[yyn] == YYSYMBOL_YYerror)
+          if (0 <= yyn && yyn <= 17 && yycheck[yyn] == YYSYMBOL_YYerror)
             {
               yyn = yytable[yyn];
               if (0 < yyn)
@@ -2558,23 +2507,23 @@ yyerrlab1:
     }
 
  
-# 1334 "parser.tab.c"
+# 1271 "parser.tab.c"
 #pragma GCC diagnostic push
-# 1334 "parser.tab.c"
+# 1271 "parser.tab.c"
  
-# 1334 "parser.tab.c"
+# 1271 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wuninitialized"
-# 1334 "parser.tab.c"
+# 1271 "parser.tab.c"
  
-# 1334 "parser.tab.c"
+# 1271 "parser.tab.c"
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-# 1334 "parser.tab.c"
+# 1271 "parser.tab.c"
  
   *++yyvsp = yylval;
  
-# 1336 "parser.tab.c"
+# 1273 "parser.tab.c"
 #pragma GCC diagnostic pop
-# 1336 "parser.tab.c"
+# 1273 "parser.tab.c"
  
 
 
@@ -2618,7 +2567,7 @@ yyreturnlab:
     {
 
 
-      yytoken = (0 <= (yychar) && (yychar) <= 301 ? ((yysymbol_kind_t) (yytranslate[yychar])) : YYSYMBOL_YYUNDEF);
+      yytoken = (0 <= (yychar) && (yychar) <= 306 ? ((yysymbol_kind_t) (yytranslate[yychar])) : YYSYMBOL_YYUNDEF);
       yydestruct ("Cleanup: discarding lookahead",
                   yytoken, &yylval);
     }
@@ -2639,13 +2588,13 @@ yyreturnlab:
 
   return yyresult;
 }
-# 126 "parser.y"
+# 59 "parser.y"
 
 void yyerror(const char *s) {
     fprintf(
-# 128 "parser.y" 3 4
+# 61 "parser.y" 3 4
            stderr
-# 128 "parser.y"
+# 61 "parser.y"
                  , "Rejeito\n");
 }
 
@@ -2653,11 +2602,7 @@ int main(int argc, char **argv) {
     if (argc > 1) {
         FILE *file = fopen(argv[1], "r");
         if (!file) {
-            fprintf(
-# 135 "parser.y" 3 4
-                   stderr
-# 135 "parser.y"
-                         , "Não foi possível abrir o arquivo %s\n", argv[1]);
+
             return 1;
         }
         yyin = file;
@@ -3249,21 +3194,23 @@ struct yy_trans_info
  flex_int32_t yy_verify;
  flex_int32_t yy_nxt;
  };
-static const flex_int16_t yy_accept[115] =
+static const flex_int16_t yy_accept[134] =
     { 0,
-        0, 0, 46, 44, 42, 42, 32, 33, 27, 25,
-       38, 26, 39, 28, 41, 37, 36, 29, 31, 30,
-       40, 34, 35, 40, 40, 40, 40, 40, 40, 40,
-       40, 40, 40, 40, 40, 40, 40, 0, 0, 41,
-       21, 22, 24, 23, 40, 40, 40, 40, 40, 5,
-       40, 40, 40, 40, 10, 40, 40, 13, 14, 40,
-       40, 40, 40, 40, 0, 0, 41, 1, 40, 40,
-        4, 40, 7, 40, 40, 40, 12, 40, 40, 40,
-       19, 40, 43, 0, 40, 40, 6, 40, 9, 40,
-       40, 40, 17, 18, 40, 0, 43, 2, 3, 40,
+        0, 0, 51, 49, 47, 47, 37, 38, 32, 30,
+       43, 31, 44, 33, 46, 42, 41, 34, 36, 35,
+       45, 39, 40, 45, 45, 45, 45, 45, 45, 45,
+       45, 45, 45, 45, 45, 45, 45, 45, 0, 0,
+       46, 26, 27, 29, 28, 45, 45, 45, 45, 45,
+       45, 5, 45, 45, 45, 45, 10, 45, 45, 45,
+       13, 14, 45, 45, 45, 45, 45, 45, 45, 0,
+        0, 46, 1, 45, 45, 45, 4, 45, 7, 45,
+       45, 45, 45, 12, 45, 45, 45, 45, 19, 45,
+       45, 48, 0, 45, 45, 22, 6, 45, 9, 45,
 
-       11, 40, 40, 20, 40, 40, 40, 40, 40, 16,
-        8, 40, 15, 0
+       45, 45, 45, 25, 17, 18, 45, 45, 0, 48,
+        2, 3, 45, 45, 11, 45, 45, 20, 23, 45,
+       45, 45, 45, 45, 45, 21, 45, 16, 24, 8,
+       45, 15, 0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -3307,84 +3254,94 @@ static const YY_CHAR yy_meta[42] =
         2
     } ;
 
-static const flex_int16_t yy_base[118] =
+static const flex_int16_t yy_base[137] =
     { 0,
-        0, 0, 132, 133, 133, 133, 125, 133, 133, 133,
-      133, 133, 133, 133, 32, 114, 133, 29, 133, 113,
-        0, 37, 133, 18, 103, 19, 25, 89, 93, 99,
-      103, 90, 28, 87, 30, 100, 92, 113, 106, 49,
-      133, 133, 133, 133, 0, 93, 81, 88, 75, 0,
-       77, 88, 79, 73, 0, 87, 71, 0, 0, 74,
-       81, 71, 69, 74, 96, 59, 89, 0, 79, 70,
-        0, 73, 0, 74, 63, 70, 0, 39, 62, 68,
-        0, 62, 133, 64, 50, 58, 0, 52, 0, 58,
-       62, 51, 0, 0, 60, 78, 77, 0, 0, 53,
+        0, 0, 150, 151, 151, 151, 143, 151, 151, 151,
+      151, 151, 151, 151, 32, 132, 151, 29, 151, 131,
+        0, 37, 151, 18, 27, 25, 25, 108, 112, 33,
+      123, 110, 35, 107, 116, 34, 119, 36, 133, 126,
+       57, 151, 151, 151, 151, 0, 113, 101, 108, 101,
+       94, 0, 96, 107, 98, 92, 0, 91, 105, 89,
+        0, 0, 92, 103, 98, 88, 86, 91, 90, 112,
+       67, 105, 0, 95, 86, 84, 0, 88, 0, 89,
+       78, 85, 84, 0, 51, 84, 75, 81, 0, 75,
+       67, 151, 74, 62, 70, 0, 0, 64, 0, 73,
 
-        0, 57, 59, 0, 46, 40, 46, 44, 32, 0,
-        0, 35, 0, 133, 41, 71, 73
+       69, 73, 62, 0, 0, 0, 71, 70, 88, 87,
+        0, 0, 63, 66, 0, 66, 68, 0, 58, 54,
+       51, 47, 46, 36, 34, 0, 28, 0, 0, 0,
+       23, 0, 151, 41, 80, 82
     } ;
 
-static const flex_int16_t yy_def[118] =
+static const flex_int16_t yy_def[137] =
     { 0,
-      114, 1, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      115, 114, 114, 115, 115, 115, 115, 115, 115, 115,
-      115, 115, 115, 115, 115, 115, 115, 116, 114, 114,
-      114, 114, 114, 114, 115, 115, 115, 115, 115, 115,
-      115, 115, 115, 115, 115, 115, 115, 115, 115, 115,
-      115, 115, 115, 115, 116, 116, 114, 115, 115, 115,
-      115, 115, 115, 115, 115, 115, 115, 115, 115, 115,
-      115, 115, 114, 117, 115, 115, 115, 115, 115, 115,
-      115, 115, 115, 115, 115, 116, 116, 115, 115, 115,
+      133, 1, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      134, 133, 133, 134, 134, 134, 134, 134, 134, 134,
+      134, 134, 134, 134, 134, 134, 134, 134, 135, 133,
+      133, 133, 133, 133, 133, 134, 134, 134, 134, 134,
+      134, 134, 134, 134, 134, 134, 134, 134, 134, 134,
+      134, 134, 134, 134, 134, 134, 134, 134, 134, 135,
+      135, 133, 134, 134, 134, 134, 134, 134, 134, 134,
+      134, 134, 134, 134, 134, 134, 134, 134, 134, 134,
+      134, 133, 136, 134, 134, 134, 134, 134, 134, 134,
 
-      115, 115, 115, 115, 115, 115, 115, 115, 115, 115,
-      115, 115, 115, 0, 114, 114, 114
+      134, 134, 134, 134, 134, 134, 134, 134, 135, 135,
+      134, 134, 134, 134, 134, 134, 134, 134, 134, 134,
+      134, 134, 134, 134, 134, 134, 134, 134, 134, 134,
+      134, 134, 0, 133, 133, 133
     } ;
 
-static const flex_int16_t yy_nxt[175] =
+static const flex_int16_t yy_nxt[193] =
     { 0,
         4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
        14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
        24, 25, 21, 26, 27, 28, 29, 21, 30, 31,
-       21, 32, 33, 34, 21, 21, 35, 21, 36, 37,
-       21, 39, 45, 40, 42, 43, 39, 49, 40, 46,
-       40, 50, 47, 58, 51, 40, 52, 61, 39, 113,
-       40, 91, 59, 83, 84, 92, 112, 40, 97, 84,
-       62, 65, 65, 96, 96, 111, 110, 109, 108, 107,
-      106, 105, 66, 66, 104, 103, 102, 101, 100, 99,
-       98, 95, 94, 93, 90, 89, 88, 87, 86, 85,
+       21, 32, 33, 34, 35, 21, 36, 21, 37, 38,
+       21, 40, 46, 41, 43, 44, 40, 132, 41, 47,
+       41, 49, 48, 51, 53, 41, 54, 52, 57, 50,
+       61, 65, 131, 68, 58, 130, 40, 129, 41, 62,
+       69, 92, 93, 102, 66, 41, 128, 103, 110, 93,
+       70, 70, 109, 109, 127, 126, 125, 124, 123, 122,
+      121, 120, 71, 71, 119, 118, 117, 116, 115, 114,
 
-       67, 66, 82, 81, 80, 79, 78, 77, 76, 75,
-       74, 73, 72, 71, 70, 69, 68, 67, 66, 64,
-       63, 60, 57, 56, 55, 54, 53, 48, 44, 41,
-       38, 114, 3, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114
+      113, 112, 111, 108, 107, 106, 105, 104, 101, 100,
+       99, 98, 97, 96, 95, 94, 72, 71, 91, 90,
+       89, 88, 87, 86, 85, 84, 83, 82, 81, 80,
+       79, 78, 77, 76, 75, 74, 73, 72, 71, 67,
+       64, 63, 60, 59, 56, 55, 45, 42, 39, 133,
+        3, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133
+
     } ;
 
-static const flex_int16_t yy_chk[175] =
+static const flex_int16_t yy_chk[193] =
     { 0,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 15, 115, 15, 18, 18, 22, 26, 22, 24,
-       15, 26, 24, 33, 27, 22, 27, 35, 40, 112,
-       40, 78, 33, 66, 66, 78, 109, 40, 84, 84,
-       35, 116, 116, 117, 117, 108, 107, 106, 105, 103,
-      102, 100, 97, 96, 95, 92, 91, 90, 88, 86,
-       85, 82, 80, 79, 76, 75, 74, 72, 70, 69,
+        1, 15, 134, 15, 18, 18, 22, 131, 22, 24,
+       15, 25, 24, 26, 27, 22, 27, 26, 30, 25,
+       33, 36, 127, 38, 30, 125, 41, 124, 41, 33,
+       38, 71, 71, 85, 36, 41, 123, 85, 93, 93,
+      135, 135, 136, 136, 122, 121, 120, 119, 117, 116,
+      114, 113, 110, 109, 108, 107, 103, 102, 101, 100,
 
-       67, 65, 64, 63, 62, 61, 60, 57, 56, 54,
-       53, 52, 51, 49, 48, 47, 46, 39, 38, 37,
-       36, 34, 32, 31, 30, 29, 28, 25, 20, 16,
-        7, 3, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114, 114, 114, 114, 114, 114, 114,
-      114, 114, 114, 114
+       98, 95, 94, 91, 90, 88, 87, 86, 83, 82,
+       81, 80, 78, 76, 75, 74, 72, 70, 69, 68,
+       67, 66, 65, 64, 63, 60, 59, 58, 56, 55,
+       54, 53, 51, 50, 49, 48, 47, 40, 39, 37,
+       35, 34, 32, 31, 29, 28, 20, 16, 7, 3,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133, 133, 133, 133, 133, 133, 133, 133, 133,
+      133, 133
+
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -3392,13 +3349,13 @@ static char *yy_last_accepting_cpos;
 
 extern int yy_flex_debug;
 int yy_flex_debug = 0;
-# 515 "lex.yy.c"
+# 527 "lex.yy.c"
 char *yytext;
 # 1 "lexico.l"
 # 2 "lexico.l"
-# 520 "lex.yy.c"
-# 521 "lex.yy.c"
-# 529 "lex.yy.c"
+# 532 "lex.yy.c"
+# 533 "lex.yy.c"
+# 541 "lex.yy.c"
 # 1 "/usr/include/unistd.h" 1 3 4
 # 27 "/usr/include/unistd.h" 3 4
 
@@ -4633,7 +4590,7 @@ int getentropy (void *__buffer, size_t __length)
 # 1219 "/usr/include/unistd.h" 2 3 4
 
 
-# 530 "lex.yy.c" 2
+# 542 "lex.yy.c" 2
 
 
 
@@ -4641,7 +4598,7 @@ int getentropy (void *__buffer, size_t __length)
 
 
 
-# 536 "lex.yy.c"
+# 548 "lex.yy.c"
 static int yy_init_globals ( void );
 
 
@@ -4672,7 +4629,7 @@ char *yyget_text ( void );
 int yyget_lineno ( void );
 
 void yyset_lineno ( int _line_number );
-# 575 "lex.yy.c"
+# 587 "lex.yy.c"
 extern int yywrap ( void );
 
 
@@ -4680,11 +4637,11 @@ extern int yywrap ( void );
 
 
     static void yyunput ( int c, char *buf_ptr );
-# 597 "lex.yy.c"
+# 609 "lex.yy.c"
 static int input ( void );
-# 682 "lex.yy.c"
+# 694 "lex.yy.c"
 extern int yylex (void);
-# 704 "lex.yy.c"
+# 716 "lex.yy.c"
 int yylex (void)
 {
  yy_state_type yy_current_state;
@@ -4704,22 +4661,22 @@ int yylex (void)
 
   if ( ! yyin )
    yyin = 
-# 722 "lex.yy.c" 3 4
+# 734 "lex.yy.c" 3 4
          stdin
-# 722 "lex.yy.c"
+# 734 "lex.yy.c"
               ;
 
   if ( ! yyout )
    yyout = 
-# 725 "lex.yy.c" 3 4
+# 737 "lex.yy.c" 3 4
           stdout
-# 725 "lex.yy.c"
+# 737 "lex.yy.c"
                 ;
 
   if ( ! ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 727 "lex.yy.c" 3 4
+# 739 "lex.yy.c" 3 4
         ((void *)0)
-# 727 "lex.yy.c"
+# 739 "lex.yy.c"
         ) ) {
    yyensure_buffer_stack ();
    (yy_buffer_stack)[(yy_buffer_stack_top)] =
@@ -4731,7 +4688,7 @@ int yylex (void)
 
  {
 # 5 "lexico.l"
-# 740 "lex.yy.c"
+# 752 "lex.yy.c"
 
  while ( 1 )
   {
@@ -4758,13 +4715,13 @@ yy_match:
    while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
     {
     yy_current_state = (int) yy_def[yy_current_state];
-    if ( yy_current_state >= 115 )
+    if ( yy_current_state >= 134 )
      yy_c = yy_meta[yy_c];
     }
    yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
    ++yy_cp;
    }
-  while ( yy_base[yy_current_state] != 133 );
+  while ( yy_base[yy_current_state] != 151 );
 
 yy_find_action:
   yy_act = yy_accept[yy_current_state];
@@ -4891,139 +4848,164 @@ case 20:
 case 21:
 
 # 26 "lexico.l"
-{ return Token_ASSIGN; }
+{ return token_INTEGER; }
  break;
 case 22:
 
 # 27 "lexico.l"
-{ return Token_LE; }
+{ return token_BOOL; }
  break;
 case 23:
 
 # 28 "lexico.l"
-{ return Token_GE; }
+{ return token_WRITE; }
  break;
 case 24:
 
 # 29 "lexico.l"
-{ return Token_NE; }
+{ return token_WRITELN; }
  break;
 case 25:
 
 # 30 "lexico.l"
-{ return Token_PLUS; }
+{ return token_READ; }
  break;
 case 26:
 
 # 31 "lexico.l"
-{ return Token_MINUS; }
+{ return Token_ASSIGN; }
  break;
 case 27:
 
 # 32 "lexico.l"
-{ return Token_MULT; }
+{ return Token_LE; }
  break;
 case 28:
 
 # 33 "lexico.l"
-{ return Token_DIVIDE; }
+{ return Token_GE; }
  break;
 case 29:
 
 # 34 "lexico.l"
-{ return Token_LT; }
+{ return Token_NE; }
  break;
 case 30:
 
 # 35 "lexico.l"
-{ return Token_GT; }
+{ return Token_PLUS; }
  break;
 case 31:
 
 # 36 "lexico.l"
-{ return Token_EQ; }
+{ return Token_MINUS; }
  break;
 case 32:
 
 # 37 "lexico.l"
-{ return Token_LPAREN; }
+{ return Token_MULT; }
  break;
 case 33:
 
 # 38 "lexico.l"
-{ return Token_RPAREN; }
+{ return Token_DIVIDE; }
  break;
 case 34:
 
 # 39 "lexico.l"
-{ return Token_LBRACKET; }
+{ return Token_LT; }
  break;
 case 35:
 
 # 40 "lexico.l"
-{ return Token_RBRACKET; }
+{ return Token_GT; }
  break;
 case 36:
 
 # 41 "lexico.l"
-{ return Token_SEMICOLON; }
+{ return Token_EQ; }
  break;
 case 37:
 
 # 42 "lexico.l"
-{ return Token_COLON; }
+{ return Token_LPAREN; }
  break;
 case 38:
 
 # 43 "lexico.l"
-{ return Token_COMMA; }
+{ return Token_RPAREN; }
  break;
 case 39:
 
 # 44 "lexico.l"
-{ return Token_PERIOD; }
+{ return Token_LBRACKET; }
  break;
 case 40:
 
 # 45 "lexico.l"
-{ yylval.sval = strdup(yytext); return Token_ID; }
+{ return Token_RBRACKET; }
  break;
 case 41:
 
 # 46 "lexico.l"
-{ yylval.ival = atoi(yytext); return Token_NUMBER; }
+{ return Token_SEMICOLON; }
  break;
 case 42:
 
-
 # 47 "lexico.l"
-{ }
+{ return Token_COLON; }
  break;
 case 43:
 
-
 # 48 "lexico.l"
-{ }
+{ return Token_COMMA; }
  break;
 case 44:
 
 # 49 "lexico.l"
-{ fprintf(
-# 49 "lexico.l" 3 4
-         stderr
-# 49 "lexico.l"
-               , "Caractere inválido: %s\n", yytext); }
+{ return Token_PERIOD; }
  break;
 case 45:
 
 # 50 "lexico.l"
+{ yylval.sval = strdup(yytext); return Token_ID; }
+ break;
+case 46:
+
+# 51 "lexico.l"
+{ yylval.ival = atoi(yytext); return Token_NUMBER; }
+ break;
+case 47:
+
+
+# 52 "lexico.l"
+{ }
+ break;
+case 48:
+
+
+# 53 "lexico.l"
+{ }
+ break;
+case 49:
+
+# 54 "lexico.l"
+{ fprintf(
+# 54 "lexico.l" 3 4
+         stderr
+# 54 "lexico.l"
+               , "Caractere inválido: %s\n", yytext); }
+ break;
+case 50:
+
+# 55 "lexico.l"
 do { if (fwrite( yytext, (size_t) yyleng, 1, yyout )) {} } while (0);
  break;
-# 1024 "lex.yy.c"
-case (46 + 0 + 1):
+# 1061 "lex.yy.c"
+case (51 + 0 + 1):
  return 0;
 
- case 46:
+ case 51:
   {
 
   int yy_amount_of_matched_text = (int) (yy_cp - (yytext)) - 1;
@@ -5034,12 +5016,12 @@ case (46 + 0 + 1):
 
   if ( (yy_buffer_stack)[(yy_buffer_stack_top)]->yy_buffer_status == 0 )
    {
-# 1047 "lex.yy.c"
+# 1084 "lex.yy.c"
    (yy_n_chars) = (yy_buffer_stack)[(yy_buffer_stack_top)]->yy_n_chars;
    (yy_buffer_stack)[(yy_buffer_stack_top)]->yy_input_file = yyin;
    (yy_buffer_stack)[(yy_buffer_stack_top)]->yy_buffer_status = 1;
    }
-# 1059 "lex.yy.c"
+# 1096 "lex.yy.c"
   if ( (yy_c_buf_p) <= &(yy_buffer_stack)[(yy_buffer_stack_top)]->yy_ch_buf[(yy_n_chars)] )
    {
    yy_state_type yy_next_state;
@@ -5047,7 +5029,7 @@ case (46 + 0 + 1):
    (yy_c_buf_p) = (yytext) + yy_amount_of_matched_text;
 
    yy_current_state = yy_get_previous_state( );
-# 1076 "lex.yy.c"
+# 1113 "lex.yy.c"
    yy_next_state = yy_try_NUL_trans( yy_current_state );
 
    yy_bp = (yytext) + 0;
@@ -5075,10 +5057,10 @@ case (46 + 0 + 1):
 
     if ( yywrap( ) )
      {
-# 1112 "lex.yy.c"
+# 1149 "lex.yy.c"
      (yy_c_buf_p) = (yytext) + 0;
 
-     yy_act = (46 + (((yy_start) - 1) / 2) + 1);
+     yy_act = (51 + (((yy_start) - 1) / 2) + 1);
      goto do_action;
      }
 
@@ -5120,7 +5102,7 @@ case (46 + 0 + 1):
   }
  }
 }
-# 1164 "lex.yy.c"
+# 1201 "lex.yy.c"
 static int yy_get_next_buffer (void)
 {
      char *dest = (yy_buffer_stack)[(yy_buffer_stack_top)]->yy_ch_buf;
@@ -5196,9 +5178,9 @@ static int yy_get_next_buffer (void)
    else
 
     b->yy_ch_buf = 
-# 1238 "lex.yy.c" 3 4
+# 1275 "lex.yy.c" 3 4
                   ((void *)0)
-# 1238 "lex.yy.c"
+# 1275 "lex.yy.c"
                       ;
 
    if ( ! b->yy_ch_buf )
@@ -5217,29 +5199,29 @@ static int yy_get_next_buffer (void)
 
 
   if ( (yy_buffer_stack)[(yy_buffer_stack_top)]->yy_is_interactive ) { int c = '*'; int n; for ( n = 0; n < num_to_read && (c = getc( yyin )) != 
-# 1255 "lex.yy.c" 3 4
+# 1292 "lex.yy.c" 3 4
  (-1) 
-# 1255 "lex.yy.c"
+# 1292 "lex.yy.c"
  && c != '\n'; ++n ) (&(yy_buffer_stack)[(yy_buffer_stack_top)]->yy_ch_buf[number_to_move])[n] = (char) c; if ( c == '\n' ) (&(yy_buffer_stack)[(yy_buffer_stack_top)]->yy_ch_buf[number_to_move])[n++] = (char) c; if ( c == 
-# 1255 "lex.yy.c" 3 4
+# 1292 "lex.yy.c" 3 4
  (-1) 
-# 1255 "lex.yy.c"
+# 1292 "lex.yy.c"
  && ferror( yyin ) ) yy_fatal_error( "input in flex scanner failed" ); (yy_n_chars) = n; } else { 
-# 1255 "lex.yy.c" 3 4
+# 1292 "lex.yy.c" 3 4
  (*__errno_location ())
-# 1255 "lex.yy.c"
+# 1292 "lex.yy.c"
  =0; while ( ((yy_n_chars) = (int) fread((&(yy_buffer_stack)[(yy_buffer_stack_top)]->yy_ch_buf[number_to_move]), 1, (yy_size_t) num_to_read, yyin)) == 0 && ferror(yyin)) { if( 
-# 1255 "lex.yy.c" 3 4
+# 1292 "lex.yy.c" 3 4
  (*__errno_location ()) 
-# 1255 "lex.yy.c"
+# 1292 "lex.yy.c"
  != 
-# 1255 "lex.yy.c" 3 4
+# 1292 "lex.yy.c" 3 4
  4
-# 1255 "lex.yy.c"
+# 1292 "lex.yy.c"
  ) { yy_fatal_error( "input in flex scanner failed" ); break; } 
-# 1255 "lex.yy.c" 3 4
+# 1292 "lex.yy.c" 3 4
  (*__errno_location ())
-# 1255 "lex.yy.c"
+# 1292 "lex.yy.c"
  =0; clearerr(yyin); } }
                               ;
 
@@ -5305,7 +5287,7 @@ static int yy_get_next_buffer (void)
   while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
    {
    yy_current_state = (int) yy_def[yy_current_state];
-   if ( yy_current_state >= 115 )
+   if ( yy_current_state >= 134 )
     yy_c = yy_meta[yy_c];
    }
   yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -5333,11 +5315,11 @@ static int yy_get_next_buffer (void)
  while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
   {
   yy_current_state = (int) yy_def[yy_current_state];
-  if ( yy_current_state >= 115 )
+  if ( yy_current_state >= 134 )
    yy_c = yy_meta[yy_c];
   }
  yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
- yy_is_jam = (yy_current_state == 114);
+ yy_is_jam = (yy_current_state == 133);
 
   return yy_is_jam ? 0 : yy_current_state;
 }
@@ -5413,7 +5395,7 @@ static int yy_get_next_buffer (void)
    switch ( yy_get_next_buffer( ) )
     {
     case 2:
-# 1439 "lex.yy.c"
+# 1476 "lex.yy.c"
      yyrestart( yyin );
 
 
@@ -5456,9 +5438,9 @@ static int yy_get_next_buffer (void)
 {
 
  if ( ! ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1480 "lex.yy.c" 3 4
+# 1517 "lex.yy.c" 3 4
        ((void *)0)
-# 1480 "lex.yy.c"
+# 1517 "lex.yy.c"
        ) ){
         yyensure_buffer_stack ();
   (yy_buffer_stack)[(yy_buffer_stack_top)] =
@@ -5466,9 +5448,9 @@ static int yy_get_next_buffer (void)
  }
 
  yy_init_buffer( ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1486 "lex.yy.c" 3 4
+# 1523 "lex.yy.c" 3 4
                 ((void *)0)
-# 1486 "lex.yy.c"
+# 1523 "lex.yy.c"
                 ), input_file );
  yy_load_buffer_state( );
 }
@@ -5487,16 +5469,16 @@ static int yy_get_next_buffer (void)
 
  yyensure_buffer_stack ();
  if ( ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1503 "lex.yy.c" 3 4
+# 1540 "lex.yy.c" 3 4
      ((void *)0)
-# 1503 "lex.yy.c"
+# 1540 "lex.yy.c"
      ) == new_buffer )
   return;
 
  if ( ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1506 "lex.yy.c" 3 4
+# 1543 "lex.yy.c" 3 4
      ((void *)0)
-# 1506 "lex.yy.c"
+# 1543 "lex.yy.c"
      ) )
   {
 
@@ -5565,9 +5547,9 @@ static void yy_load_buffer_state (void)
   return;
 
  if ( b == ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1573 "lex.yy.c" 3 4
+# 1610 "lex.yy.c" 3 4
           ((void *)0)
-# 1573 "lex.yy.c"
+# 1610 "lex.yy.c"
           ) )
   (yy_buffer_stack)[(yy_buffer_stack_top)] = (YY_BUFFER_STATE) 0;
 
@@ -5585,9 +5567,9 @@ static void yy_load_buffer_state (void)
 
 {
  int oerrno = 
-# 1589 "lex.yy.c" 3 4
+# 1626 "lex.yy.c" 3 4
              (*__errno_location ())
-# 1589 "lex.yy.c"
+# 1626 "lex.yy.c"
                   ;
 
  yy_flush_buffer( b );
@@ -5600,9 +5582,9 @@ static void yy_load_buffer_state (void)
 
 
     if (b != ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1600 "lex.yy.c" 3 4
+# 1637 "lex.yy.c" 3 4
             ((void *)0)
-# 1600 "lex.yy.c"
+# 1637 "lex.yy.c"
             )){
         b->yy_bs_lineno = 1;
         b->yy_bs_column = 0;
@@ -5611,9 +5593,9 @@ static void yy_load_buffer_state (void)
         b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
 
  
-# 1607 "lex.yy.c" 3 4
+# 1644 "lex.yy.c" 3 4
 (*__errno_location ()) 
-# 1607 "lex.yy.c"
+# 1644 "lex.yy.c"
       = oerrno;
 }
 
@@ -5641,9 +5623,9 @@ static void yy_load_buffer_state (void)
  b->yy_buffer_status = 0;
 
  if ( b == ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1633 "lex.yy.c" 3 4
+# 1670 "lex.yy.c" 3 4
           ((void *)0)
-# 1633 "lex.yy.c"
+# 1670 "lex.yy.c"
           ) )
   yy_load_buffer_state( );
 }
@@ -5657,9 +5639,9 @@ static void yy_load_buffer_state (void)
 void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 {
      if (new_buffer == 
-# 1645 "lex.yy.c" 3 4
+# 1682 "lex.yy.c" 3 4
                       ((void *)0)
-# 1645 "lex.yy.c"
+# 1682 "lex.yy.c"
                           )
   return;
 
@@ -5667,9 +5649,9 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 
 
  if ( ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1651 "lex.yy.c" 3 4
+# 1688 "lex.yy.c" 3 4
      ((void *)0)
-# 1651 "lex.yy.c"
+# 1688 "lex.yy.c"
      ) )
   {
 
@@ -5680,9 +5662,9 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 
 
  if (( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1660 "lex.yy.c" 3 4
+# 1697 "lex.yy.c" 3 4
     ((void *)0)
-# 1660 "lex.yy.c"
+# 1697 "lex.yy.c"
     ))
   (yy_buffer_stack_top)++;
  (yy_buffer_stack)[(yy_buffer_stack_top)] = new_buffer;
@@ -5699,29 +5681,29 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 void yypop_buffer_state (void)
 {
      if (!( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1675 "lex.yy.c" 3 4
+# 1712 "lex.yy.c" 3 4
          ((void *)0)
-# 1675 "lex.yy.c"
+# 1712 "lex.yy.c"
          ))
   return;
 
  yy_delete_buffer(( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1678 "lex.yy.c" 3 4
+# 1715 "lex.yy.c" 3 4
                  ((void *)0)
-# 1678 "lex.yy.c"
+# 1715 "lex.yy.c"
                  ) );
  (yy_buffer_stack)[(yy_buffer_stack_top)] = 
-# 1679 "lex.yy.c" 3 4
+# 1716 "lex.yy.c" 3 4
                            ((void *)0)
-# 1679 "lex.yy.c"
+# 1716 "lex.yy.c"
                                ;
  if ((yy_buffer_stack_top) > 0)
   --(yy_buffer_stack_top);
 
  if (( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1683 "lex.yy.c" 3 4
+# 1720 "lex.yy.c" 3 4
     ((void *)0)
-# 1683 "lex.yy.c"
+# 1720 "lex.yy.c"
     )) {
   yy_load_buffer_state( );
   (yy_did_buffer_switch_on_eof) = 1;
@@ -5789,9 +5771,9 @@ YY_BUFFER_STATE yy_scan_buffer (char * base, yy_size_t size )
       base[size-1] != 0 )
 
   return 
-# 1749 "lex.yy.c" 3 4
+# 1786 "lex.yy.c" 3 4
         ((void *)0)
-# 1749 "lex.yy.c"
+# 1786 "lex.yy.c"
             ;
 
  b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state ) );
@@ -5802,9 +5784,9 @@ YY_BUFFER_STATE yy_scan_buffer (char * base, yy_size_t size )
  b->yy_buf_pos = b->yy_ch_buf = base;
  b->yy_is_our_buffer = 0;
  b->yy_input_file = 
-# 1758 "lex.yy.c" 3 4
+# 1795 "lex.yy.c" 3 4
                    ((void *)0)
-# 1758 "lex.yy.c"
+# 1795 "lex.yy.c"
                        ;
  b->yy_n_chars = b->yy_buf_size;
  b->yy_is_interactive = 0;
@@ -5816,13 +5798,13 @@ YY_BUFFER_STATE yy_scan_buffer (char * base, yy_size_t size )
 
  return b;
 }
-# 1778 "lex.yy.c"
+# 1815 "lex.yy.c"
 YY_BUFFER_STATE yy_scan_string (const char * yystr )
 {
 
  return yy_scan_bytes( yystr, (int) strlen(yystr) );
 }
-# 1791 "lex.yy.c"
+# 1828 "lex.yy.c"
 YY_BUFFER_STATE yy_scan_bytes (const char * yybytes, int _yybytes_len )
 {
  YY_BUFFER_STATE b;
@@ -5860,13 +5842,13 @@ YY_BUFFER_STATE yy_scan_bytes (const char * yybytes, int _yybytes_len )
 static void __attribute__((__noreturn__)) yy_fatal_error (const char* msg )
 {
    fprintf( 
-# 1827 "lex.yy.c" 3 4
+# 1864 "lex.yy.c" 3 4
            stderr
-# 1827 "lex.yy.c"
+# 1864 "lex.yy.c"
                  , "%s\n", msg );
  exit( 2 );
 }
-# 1853 "lex.yy.c"
+# 1890 "lex.yy.c"
 int yyget_lineno (void)
 {
 
@@ -5949,16 +5931,16 @@ static int yy_init_globals (void)
 
 
     (yy_buffer_stack) = 
-# 1934 "lex.yy.c" 3 4
+# 1971 "lex.yy.c" 3 4
                        ((void *)0)
-# 1934 "lex.yy.c"
+# 1971 "lex.yy.c"
                            ;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
     (yy_c_buf_p) = 
-# 1937 "lex.yy.c" 3 4
+# 1974 "lex.yy.c" 3 4
                   ((void *)0)
-# 1937 "lex.yy.c"
+# 1974 "lex.yy.c"
                       ;
     (yy_init) = 0;
     (yy_start) = 0;
@@ -5969,14 +5951,14 @@ static int yy_init_globals (void)
 
 
     yyin = 
-# 1946 "lex.yy.c" 3 4
+# 1983 "lex.yy.c" 3 4
           ((void *)0)
-# 1946 "lex.yy.c"
+# 1983 "lex.yy.c"
               ;
     yyout = 
-# 1947 "lex.yy.c" 3 4
+# 1984 "lex.yy.c" 3 4
            ((void *)0)
-# 1947 "lex.yy.c"
+# 1984 "lex.yy.c"
                ;
 
 
@@ -5992,19 +5974,19 @@ int yylex_destroy (void)
 
 
  while(( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1961 "lex.yy.c" 3 4
+# 1998 "lex.yy.c" 3 4
       ((void *)0)
-# 1961 "lex.yy.c"
+# 1998 "lex.yy.c"
       )){
   yy_delete_buffer( ( (yy_buffer_stack) ? (yy_buffer_stack)[(yy_buffer_stack_top)] : 
-# 1962 "lex.yy.c" 3 4
+# 1999 "lex.yy.c" 3 4
                    ((void *)0)
-# 1962 "lex.yy.c"
+# 1999 "lex.yy.c"
                    ) );
   (yy_buffer_stack)[(yy_buffer_stack_top)] = 
-# 1963 "lex.yy.c" 3 4
+# 2000 "lex.yy.c" 3 4
                             ((void *)0)
-# 1963 "lex.yy.c"
+# 2000 "lex.yy.c"
                                 ;
   yypop_buffer_state();
  }
@@ -6012,9 +5994,9 @@ int yylex_destroy (void)
 
  yyfree((yy_buffer_stack) );
  (yy_buffer_stack) = 
-# 1969 "lex.yy.c" 3 4
+# 2006 "lex.yy.c" 3 4
                     ((void *)0)
-# 1969 "lex.yy.c"
+# 2006 "lex.yy.c"
                         ;
 
 
@@ -6023,7 +6005,7 @@ int yylex_destroy (void)
 
     return 0;
 }
-# 2003 "lex.yy.c"
+# 2040 "lex.yy.c"
 void *yyalloc (yy_size_t size )
 {
    return malloc(size);
@@ -6031,7 +6013,7 @@ void *yyalloc (yy_size_t size )
 
 void *yyrealloc (void * ptr, yy_size_t size )
 {
-# 2018 "lex.yy.c"
+# 2055 "lex.yy.c"
  return realloc(ptr, size);
 }
 
@@ -6039,7 +6021,7 @@ void yyfree (void * ptr )
 {
    free( (char *) ptr );
 }
-# 50 "lexico.l"
+# 55 "lexico.l"
 
 
 int yywrap() {
